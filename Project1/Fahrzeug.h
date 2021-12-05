@@ -47,6 +47,7 @@ public:
 
 	double getAbschnittStrecke() const;
 	bool getRespectSpeedLimit() const;
+	double getTankinhalt() const;
 
 	Fahrzeug& operator=(const Fahrzeug& f);
 };

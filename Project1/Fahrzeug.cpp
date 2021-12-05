@@ -89,6 +89,11 @@ bool Fahrzeug::getRespectSpeedLimit() const
 	return p_bRespectSpeedLimit;
 }
 
+double Fahrzeug::getTankinhalt() const
+{
+	return p_dTankinhalt;
+}
+
 Fahrzeug& Fahrzeug::operator=(const Fahrzeug& f)
 {
 	Simulationsobjekt::operator=(f);

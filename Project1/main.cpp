@@ -70,6 +70,8 @@ void vAufgabe_6b()
 			for (int j = 0; j < i; j++) {
 				dGlobaleZeit += d;
 				vSetzeZeit(dGlobaleZeit);
+				hinweg.vSimulieren();
+				rueckweg.vSimulieren();
 				hinweg.vFahrzeugeZeichnen();
 				rueckweg.vFahrzeugeZeichnen();
 				vSleep(i2);

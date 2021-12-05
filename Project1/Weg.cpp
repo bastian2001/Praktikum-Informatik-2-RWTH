@@ -51,7 +51,8 @@ void Weg::vAusgeben(ostream& o) const
 void Weg::vFahrzeugeZeichnen() const
 {
     for (auto& fahrzeug : p_pFahrzeuge) {
-        fahrzeug->vZeichnen(*this);
+        if (fahrzeug->getTankinhalt() >= 0)
+            fahrzeug->vZeichnen(*this);
     }
 }
 
