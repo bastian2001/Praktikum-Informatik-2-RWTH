@@ -19,8 +19,10 @@ void PKW::vSimulieren()
 	if (dGlobaleZeit - p_dZeit > 0)
 		// Es wird angenommen, dass für den gesamten Simulationsschritt noch genug Reserve da ist
 		if (p_dTankinhalt > 0) {
-			p_dTankinhalt -= (dGlobaleZeit - p_dZeit) * dGeschwindigkeit() * p_dVerbrauch / 100;
+			double dStreckeVorher = p_dGesamtStrecke;
 			Fahrzeug::vSimulieren();
+			double dDeltaStrecke = p_dGesamtStrecke - dStreckeVorher;
+			p_dTankinhalt -= dDeltaStrecke * p_dVerbrauch / 100;
 		}
 		else {
 			p_dZeit = dGlobaleZeit;

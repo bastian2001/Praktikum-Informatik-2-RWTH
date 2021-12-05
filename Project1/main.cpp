@@ -34,10 +34,10 @@ void vAufgabe_6() {
 	fahrzeuge.push_back(make_unique<PKW>("BMW", 160, 9, 60));
 	fahrzeuge.push_back(make_unique<PKW>("Audi", 250, 10, 100));
 	fahrzeuge.push_back(make_unique<Fahrrad>("BMX", 55));
-	fahrzeuge.push_back(make_unique<Fahrrad>("Krasses Fahrrad", 100));
+	fahrzeuge.push_back(make_unique<Fahrrad>("Krasses F.", 100));
 	Fahrzeug::vKopf();
 	Weg::vKopf();
-	cout << "(s)imulieren (-> Dauer), (a)usgeben (-> ID), vAnnahme (F)ahren (-> ID, Weg-Anfangsbuchstabe), vAnnahme (P)arken (-> ID, Startzeitpunkt, Weg-Anfangsbuchstabe), Globale (Z)eit ausgeben, (K)öpfe erneut anzeigen" << endl;
+	cout << "(s)imulieren (-> Dauer)\n(a)usgeben (-> ID)\nvAnnahme (F)ahren (-> ID, Weg-Anfangsbuchstabe)\nvAnnahme (P)arken (-> ID, Startzeitpunkt, Weg-Anfangsbuchstabe)\nGlobale (Z)eit ausgeben\n(K)öpfe erneut anzeigen" << endl;
 
 	while (true) {
 		char operation;
@@ -86,7 +86,7 @@ void vAufgabe_6() {
 					break;
 				case 'a':
 				case 'A':
-					boxgraben.vAnnahme(move(fahrzeuge[id]));
+					autobahn.vAnnahme(move(fahrzeuge[id]));
 					break;
 				}
 			}
@@ -107,10 +107,11 @@ void vAufgabe_6() {
 					break;
 				case 'a':
 				case 'A':
-					boxgraben.vAnnahme(move(fahrzeuge[id]), startzeit);
+					autobahn.vAnnahme(move(fahrzeuge[id]), startzeit);
 					break;
 				}
 			}
+			break;
 		case 'z':
 		case 'Z':
 			cout << dGlobaleZeit << endl;

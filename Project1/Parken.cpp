@@ -16,7 +16,7 @@ Parken::Parken(Weg& aWeg, double dStartzeitpunkt):
 
 double Parken::dStrecke(Fahrzeug& aFzg, double dZeitIntervall)
 {
-	if (p_dStartzeitpunkt > dGlobaleZeit - 0.000001)
-		return 0;
-	throw new Losfahren(aFzg, p_aWeg);
+	if (p_dStartzeitpunkt < dGlobaleZeit + .000001)
+		throw Losfahren(aFzg, p_aWeg);
+	return 0;
 }

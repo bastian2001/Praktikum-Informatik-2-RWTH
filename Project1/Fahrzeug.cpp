@@ -52,6 +52,7 @@ void Fahrzeug::vNeueStrecke(Weg& w)
 {
 	p_pVerhalten = make_unique<Fahren>(w);
 	p_dAbschnittStrecke = 0;
+	p_dZeit = dGlobaleZeit;
 }
 
 void Fahrzeug::vNeueStrecke(Weg& w, double dStartzeit)
