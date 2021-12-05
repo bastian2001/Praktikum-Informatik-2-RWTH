@@ -8,4 +8,5 @@ Streckenende::Streckenende(Fahrzeug& aFzg, Weg& aWeg) :
 void Streckenende::vBearbeiten()
 {
 	cout << "Streckenende-Ausnahme " << p_aFahrzeug.getName() << " " << p_aWeg.getName() << endl;
+	p_aWeg.pAbgabe(p_aFahrzeug);
 }

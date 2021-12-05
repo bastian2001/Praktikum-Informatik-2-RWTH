@@ -7,8 +7,13 @@
 #include "PKW.h"
 #include "Weg.h"
 #include "SimuClient.h"
+#include <random>
+#include "vertagt_liste - Vorlage.h"
 
 using namespace std;
+
+static std::mt19937 device(0);
+std::uniform_int_distribution<int> dist(0, 9);
 
 //void vAufgabe_1();
 //void vAufgabe_1a();
@@ -18,34 +23,72 @@ using namespace std;
 //void vAufgabe_4();
 //void vAufgabe_5();
 //void vAufgabe_6();
-void vAufgabe_6b(); // mit Grafik-Implementation
+void vAufgabe_6Grafik();
+//void vAufgabe_6a();
 
 double dGlobaleZeit = 0.0;
 double dEpsilon = 0.001;
 
 
 int main() {
-	vAufgabe_6b();
+	vAufgabe_6Grafik();
 }
 
-void vAufgabe_6b() 
+/*void vAufgabe_6a() {
+	vertagt::VListe<int> list;
+	for (int i = 0; i < 10; i++) {
+		list.push_back(dist(device));
+	}
+	list.vAktualisieren();
+	cout << "Vor dem Filtern: ";
+	for (auto element : list) {
+		cout << element << " ";
+	}
+	cout << endl;
+
+	auto it = list.begin();
+	while (it != list.end()) {
+		if (*it > 5) {
+			list.erase(it);
+		}
+		it++;
+	}
+	cout << "Nach dem Filtern: ";
+	for (auto element : list) {
+		cout << element << " ";
+	}
+	cout << endl;
+
+	list.vAktualisieren();
+	cout << "Nach dem Aktualisieren: ";
+	for (auto element : list) {
+		cout << element << " ";
+	}
+	cout << endl;
+}*/
+
+void vAufgabe_6Grafik()
 {
-	Weg hinweg("Hinweg", 500);
+	Weg hinweg("Hinweg", 500, Tempolimit::innerorts);
 	Weg rueckweg("Rueckweg", 500);
 	auto bmw = make_unique<PKW>("BMW", 160, 9, 60);
 	auto audi = make_unique<PKW>("Audi", 250, 10, 100);
 	auto fahrrad = make_unique<Fahrrad>("BMX", 55);
 	auto krassesf = make_unique<Fahrrad>("KrassesFah", 100);
+	cout << endl << endl;
 
 	hinweg.vAnnahme(move(bmw));
 	hinweg.vAnnahme(move(audi), 3);
 	hinweg.vAnnahme(move(fahrrad));
 	hinweg.vAnnahme(move(krassesf), 2);
 
+	cout << endl << endl;
+	cout << "	1) Einen Schritt (s)imulieren (-> Dauer)\n	2) (M)ehrere Schritte simulieren (-> Schrittweite, Anzahl, Verzoegerung)\n	3) (a)usgeben (-> H/R)\n	4) Globale (Z)eit ausgeben\n	5) (K)öpfe erneut anzeigen" << endl;
 
+	cout << endl << endl;
 	Fahrzeug::vKopf();
 	Weg::vKopf();
-	cout << "einen Schritt (s)imulieren (-> Dauer)\n(M)ehrere Schritte simulieren (-> Schrittweite, Anzahl, Verzoegerung)\n(a)usgeben (-> H/R)\nGlobale (Z)eit ausgeben\n(K)öpfe erneut anzeigen" << endl;
+	cout << endl ;
 
 
 	bInitialisiereGrafik(800, 500);

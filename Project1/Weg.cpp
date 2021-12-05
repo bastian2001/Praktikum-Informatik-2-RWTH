@@ -1,5 +1,6 @@
 #include "Weg.h"
 #include "Fahrzeug.h"
+#include "vertagt_liste - Vorlage.h"
 
 #include <iomanip>
 #include <iostream>
@@ -28,10 +29,12 @@ double Weg::getTempolimit() const
 
 void Weg::vSimulieren()
 {
+    p_pFahrzeuge.vAktualisieren();
     for (auto& pFahrzeug : p_pFahrzeuge)
     {
         pFahrzeug->vSimulieren();
     }
+    p_pFahrzeuge.vAktualisieren();
 }
 
 void Weg::vAusgeben(ostream& o) const
@@ -51,21 +54,20 @@ void Weg::vAusgeben(ostream& o) const
 void Weg::vFahrzeugeZeichnen() const
 {
     for (auto& fahrzeug : p_pFahrzeuge) {
-        if (fahrzeug->getTankinhalt() >= 0)
-            fahrzeug->vZeichnen(*this);
+        fahrzeug->vZeichnen(*this);
     }
 }
 
 void Weg::vAnnahme(unique_ptr<Fahrzeug> pFahrzeug)
 {
-    cout << "Fahrzeug " << pFahrzeug->getName() << " wird fahrend auf " << p_sName << " gesetzt" << endl;
+    cout << pFahrzeug->getName() << " wird fahrend auf " << p_sName << " gesetzt" << endl;
     pFahrzeug->vNeueStrecke(*this);
     p_pFahrzeuge.push_back(move(pFahrzeug));
 }
 
 void Weg::vAnnahme(unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit)
 {
-    cout << "Fahrzeug " << pFahrzeug->getName() << " wird parkend auf " << p_sName << " gesetzt und fährt nach " << dStartzeit << "h los." << endl;
+    cout << pFahrzeug->getName() << " wird parkend auf " << p_sName << " gesetzt und fährt nach " << dStartzeit << "h los." << endl;
     pFahrzeug->vNeueStrecke(*this, dStartzeit);
     p_pFahrzeuge.push_front(move(pFahrzeug));
 }
@@ -79,6 +81,7 @@ unique_ptr<Fahrzeug> Weg::pAbgabe(const Fahrzeug& aFzg)
             p_pFahrzeuge.erase(it);
             return move(pFahrzeug);
         }
+        it++;
     }
     return nullptr;
 }

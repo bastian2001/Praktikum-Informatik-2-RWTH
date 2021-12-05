@@ -66,6 +66,7 @@ double Fahrzeug::dTanken(double dLiter) {
 	if (delta > dLiter)
 		delta = dLiter;
 	p_dTankinhalt += delta;
+	cout << "Fahrzeug " << p_sName << " wird aufgetankt. Es hat nun " << p_dTankinhalt << " Liter im Tank.\n";
 	return delta;
 }
 

@@ -54,6 +54,12 @@
     <ClInclude Include="SimuClient.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="vertagt_liste - Vorlage.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="vertagt_aktion - Vorlage.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Fahrzeug.cpp">

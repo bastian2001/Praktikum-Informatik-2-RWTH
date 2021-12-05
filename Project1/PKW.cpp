@@ -17,13 +17,16 @@ PKW::~PKW()
 
 void PKW::vSimulieren()
 {
+	if (dGlobaleZeit > 3 && p_dZeit <= 3)
+		dTanken(); //nach 3h nachtanken
 	if (dGlobaleZeit - p_dZeit > 0)
 		// Es wird angenommen, dass für den gesamten Simulationsschritt noch genug Reserve da ist
-		if (p_dTankinhalt > 0) {
+		if (p_dTankinhalt > 0.00001) { //falls der PKW nur epsilon im Tank hat, soll es nicht fahren.
 			double dStreckeVorher = p_dGesamtStrecke;
 			Fahrzeug::vSimulieren();
 			double dDeltaStrecke = p_dGesamtStrecke - dStreckeVorher;
 			p_dTankinhalt -= dDeltaStrecke * p_dVerbrauch / 100;
+			if (p_dTankinhalt < 0) p_dTankinhalt = 0; //Tankinhalt < 0 löst Fehler aus
 		}
 		else {
 			p_dZeit = dGlobaleZeit;

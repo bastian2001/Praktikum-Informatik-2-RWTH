@@ -2,6 +2,7 @@
 #include "Simulationsobjekt.h"
 #include <list>
 #include "Tempolimit.h"
+#include "vertagt_liste - Vorlage.h"
 using namespace std;
 
 class Fahrzeug;
@@ -10,7 +11,7 @@ class Weg :
 {
 private:
     const double p_dLaenge;
-    list <unique_ptr<Fahrzeug>> p_pFahrzeuge;
+    vertagt::VListe <unique_ptr<Fahrzeug>> p_pFahrzeuge;
     Tempolimit p_eTempolimit;
 public:
     Weg();

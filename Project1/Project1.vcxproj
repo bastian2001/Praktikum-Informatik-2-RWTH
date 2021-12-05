@@ -152,6 +152,8 @@
     <ClInclude Include="PKW.h" />
     <ClInclude Include="Simulationsobjekt.h" />
     <ClInclude Include="Verhalten.h" />
+    <ClInclude Include="vertagt_aktion - Vorlage.h" />
+    <ClInclude Include="vertagt_liste - Vorlage.h" />
     <ClInclude Include="Weg.h" />
   </ItemGroup>
   <ItemGroup>

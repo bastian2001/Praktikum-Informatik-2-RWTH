@@ -34,7 +34,20 @@ namespace vertagt
 	};
 
 	// PushFront
-	...
+	template <class T>
+	class VPushFront : public VAktion<T>
+	{
+	private:
+		T p_objekt;
+
+	public:
+		VPushFront(std::list<T>& liste, T obj) : VAktion<T>(liste), p_objekt(std::move(obj)) {}
+		virtual ~VPushFront() = default;
+		void vAusfuehren() override
+		{
+			VAktion<T>::p_pListe.push_front(std::move(p_objekt));
+		}
+	};
 
 	// Erase
 	template <class T>
@@ -47,11 +60,11 @@ namespace vertagt
 		iterator p_it;  // bei erase Iterator speichern
 
 	public:
-		VErase(...) : ... {}
+		VErase(std::list<T>& liste, iterator it) : VAktion<T>(liste), p_it(it) {}
 		virtual ~VErase() = default;
 		void vAusfuehren() override
 		{
-			...
+			VAktion<T>::p_pListe.erase(p_it);
 		}
 	};
 }  // namespace vertagt
