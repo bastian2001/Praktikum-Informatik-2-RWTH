@@ -34,6 +34,7 @@ void Fahrzeug::vSimulieren()
 	double delta = dGlobaleZeit - p_dZeit;
 	if (delta > 0) {
 		double strecke = 0;
+		p_dZeit = dGlobaleZeit;
 		try {
 			strecke = p_pVerhalten->dStrecke(*this, delta);
 		}
@@ -44,7 +45,6 @@ void Fahrzeug::vSimulieren()
 		p_dGesamtStrecke += strecke;
 		p_dAbschnittStrecke += strecke;
 		p_dGesamtZeit += delta;
-		p_dZeit = dGlobaleZeit;
 	}
 }
 
