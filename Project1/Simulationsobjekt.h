@@ -24,6 +24,6 @@ public:
 	bool operator==(Simulationsobjekt& f);
 	Simulationsobjekt& operator=(const Simulationsobjekt &s);
 
-	string getName(); //damit p_sName protected bleiben kann
+	string getName() const; //damit p_sName protected bleiben kann
 };
 

@@ -1,5 +1,6 @@
 #include "Parken.h"
 #include "Fahrzeug.h"
+#include "Losfahren.h"
 #include "Weg.h"
 #include <iostream>
 
@@ -15,8 +16,7 @@ Parken::Parken(Weg& aWeg, double dStartzeitpunkt):
 
 double Parken::dStrecke(Fahrzeug& aFzg, double dZeitIntervall)
 {
-	if (p_dStartzeitpunkt > dGlobaleZeit)
+	if (p_dStartzeitpunkt > dGlobaleZeit - 0.000001)
 		return 0;
-	cout << aFzg.getName() << " fährt los!\n";
-	return 0;
+	throw new Losfahren(aFzg, p_aWeg);
 }

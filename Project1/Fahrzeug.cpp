@@ -1,6 +1,9 @@
 #include "Fahrzeug.h"
 #include "Parken.h"
 #include "Fahren.h"
+#include "Fahrausnahme.h"
+#include "Streckenende.h"
+#include "Losfahren.h"
 #include <string>
 #include <iostream>
 
@@ -30,15 +33,17 @@ void Fahrzeug::vSimulieren()
 {
 	double delta = dGlobaleZeit - p_dZeit;
 	if (delta > 0) {
-		double strecke = p_pVerhalten->dStrecke(*this, delta);
-		if (strecke > 0.000001) {
-			p_dGesamtStrecke += strecke;
-			p_dAbschnittStrecke += strecke;
-			p_dGesamtZeit += delta;
+		double strecke = 0;
+		try {
+			strecke = p_pVerhalten->dStrecke(*this, delta);
 		}
-		else {
-			cout << p_sName << " ist am Wegende angekommen" << endl;
+		catch (Fahrausnahme& e) {
+			e.vBearbeiten();
+			return;
 		}
+		p_dGesamtStrecke += strecke;
+		p_dAbschnittStrecke += strecke;
+		p_dGesamtZeit += delta;
 		p_dZeit = dGlobaleZeit;
 	}
 }

@@ -26,7 +26,7 @@ Simulationsobjekt& Simulationsobjekt::operator=(const Simulationsobjekt &s)
 	return *this;
 }
 
-string Simulationsobjekt::getName()
+string Simulationsobjekt::getName() const
 {
 	return p_sName;
 }
