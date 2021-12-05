@@ -5,7 +5,7 @@
 class Verhalten
 {
 protected:
-	const Weg& p_aWeg;
+	Weg& p_aWeg;
 public:
 	Verhalten() = delete;
 	Verhalten(Weg& aWeg);

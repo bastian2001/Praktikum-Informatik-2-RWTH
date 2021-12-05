@@ -15,7 +15,7 @@ Simulationsobjekt::~Simulationsobjekt()
 	//cout << "Simulationsobjekt " << p_sName << " mit ID " << p_iID << " gelöscht\n";
 }
 
-bool Simulationsobjekt::operator==(Simulationsobjekt& f)
+bool Simulationsobjekt::operator==(const Simulationsobjekt& f) const
 {
 	return this->p_iID == f.p_iID;
 }

@@ -1,6 +1,6 @@
 #include "Streckenende.h"
 
-Streckenende::Streckenende(Fahrzeug& aFzg, const Weg& aWeg) :
+Streckenende::Streckenende(Fahrzeug& aFzg, Weg& aWeg) :
 	Fahrausnahme(aFzg, aWeg)
 {
 }

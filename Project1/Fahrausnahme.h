@@ -11,9 +11,9 @@ class Fahrausnahme :
 {
 protected:
 	Fahrzeug& p_aFahrzeug;
-	const Weg& p_aWeg;
+	Weg& p_aWeg;
 public:
-	Fahrausnahme(Fahrzeug& aFzg, const Weg& aWeg);
+	Fahrausnahme(Fahrzeug& aFzg, Weg& aWeg);
 	Fahrausnahme() = delete;
 
 	virtual void vBearbeiten() = 0;

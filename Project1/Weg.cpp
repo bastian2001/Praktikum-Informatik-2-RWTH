@@ -70,6 +70,19 @@ void Weg::vAnnahme(unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit)
     p_pFahrzeuge.push_front(move(pFahrzeug));
 }
 
+unique_ptr<Fahrzeug> Weg::pAbgabe(const Fahrzeug& aFzg)
+{
+    auto it = p_pFahrzeuge.begin();
+    while(it != p_pFahrzeuge.end()) {
+        if (**it == aFzg) {
+            auto pFahrzeug = move(*it);
+            p_pFahrzeuge.erase(it);
+            return move(pFahrzeug);
+        }
+    }
+    return nullptr;
+}
+
 void Weg::vKopf()
 {
     cout << setfill(' ') << setw(3) << "ID" << "  "

@@ -5,7 +5,7 @@ class Streckenende :
 {
 public:
     Streckenende() = delete;
-    Streckenende(Fahrzeug& aFzg, const Weg& aWeg);
+    Streckenende(Fahrzeug& aFzg, Weg& aWeg);
 
     void vBearbeiten() override;
 };

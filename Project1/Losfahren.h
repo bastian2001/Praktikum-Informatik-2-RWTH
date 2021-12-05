@@ -5,7 +5,7 @@ class Losfahren :
 {
 public:
     Losfahren() = delete;
-    Losfahren(Fahrzeug& aFzg, const Weg& aWeg);
+    Losfahren(Fahrzeug& aFzg, Weg& aWeg);
 
 
     void vBearbeiten() override;

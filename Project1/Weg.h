@@ -23,6 +23,7 @@ public:
     void vFahrzeugeZeichnen() const;
     void vAnnahme(unique_ptr<Fahrzeug> pFahrzeug);
     void vAnnahme(unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit);
+    unique_ptr<Fahrzeug> pAbgabe(const Fahrzeug& aFzg);
     static void vKopf();
 
     double getLaenge() const;

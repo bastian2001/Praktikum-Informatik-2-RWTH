@@ -50,6 +50,7 @@ public:
 	double getTankinhalt() const;
 
 	Fahrzeug& operator=(const Fahrzeug& f);
+	bool operator==(const Fahrzeug& f) const;
 };
 
 ostream& operator<<(ostream& o, const Fahrzeug& f);

@@ -103,6 +103,11 @@ Fahrzeug& Fahrzeug::operator=(const Fahrzeug& f)
 	return *this;
 }
 
+bool Fahrzeug::operator==(const Fahrzeug& f) const
+{
+	return Simulationsobjekt::operator==(f);
+}
+
 double Fahrzeug::dGeschwindigkeit() const
 {
 	return p_dMaxGeschwindigkeit;
