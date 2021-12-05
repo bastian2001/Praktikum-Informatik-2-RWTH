@@ -51,6 +51,9 @@
     <ClInclude Include="Streckenende.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="SimuClient.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Fahrzeug.cpp">
@@ -92,5 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="SimuClient.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SimuClient.lib" />
   </ItemGroup>
 </Project>

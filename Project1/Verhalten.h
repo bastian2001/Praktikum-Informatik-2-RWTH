@@ -11,4 +11,5 @@ public:
 	Verhalten(Weg& aWeg);
 
 	virtual double dStrecke(Fahrzeug& aFzg, double dZeitIntervall) = 0;
+	//const Weg& getWeg() const;
 };

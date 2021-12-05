@@ -1,4 +1,5 @@
 #include "PKW.h"
+#include "SimuClient.h"
 
 extern double dGlobaleZeit;
 
@@ -33,6 +34,11 @@ void PKW::vAusgeben(ostream& o) const
 {
 	Fahrzeug::vAusgeben(o);
 	o << ' ' << setprecision(2) << setw(12) << p_dVerbrauch * p_dGesamtStrecke / 100 << endl;
+}
+
+void PKW::vZeichnen(const Weg& aWeg) const
+{
+	bZeichnePKW(p_sName, aWeg.getName(), p_dAbschnittStrecke / aWeg.getLaenge(), dGeschwindigkeit(), p_dTankinhalt);
 }
 
 PKW& PKW::operator=(const PKW& p)

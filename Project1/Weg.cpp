@@ -48,6 +48,13 @@ void Weg::vAusgeben(ostream& o) const
     }
 }
 
+void Weg::vFahrzeugeZeichnen() const
+{
+    for (auto& fahrzeug : p_pFahrzeuge) {
+        fahrzeug->vZeichnen(*this);
+    }
+}
+
 void Weg::vAnnahme(unique_ptr<Fahrzeug> pFahrzeug)
 {
     cout << "Fahrzeug " << pFahrzeug->getName() << " wird fahrend auf " << p_sName << " gesetzt" << endl;

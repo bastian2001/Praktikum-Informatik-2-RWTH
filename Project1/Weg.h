@@ -20,6 +20,7 @@ public:
     double getTempolimit() const;
     void vSimulieren() override;
     void vAusgeben(ostream& o) const override;
+    void vFahrzeugeZeichnen() const;
     void vAnnahme(unique_ptr<Fahrzeug> pFahrzeug);
     void vAnnahme(unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit);
     static void vKopf();

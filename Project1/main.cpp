@@ -6,6 +6,7 @@
 #include "Fahrrad.h"
 #include "PKW.h"
 #include "Weg.h"
+#include "SimuClient.h"
 
 using namespace std;
 
@@ -16,18 +17,99 @@ using namespace std;
 //void vAufgabe_AB1();
 //void vAufgabe_4();
 //void vAufgabe_5();
-void vAufgabe_6();
-
+//void vAufgabe_6();
+void vAufgabe_6b(); // mit Grafik-Implementation
 
 double dGlobaleZeit = 0.0;
 double dEpsilon = 0.001;
 
 
 int main() {
-	vAufgabe_6();
+	vAufgabe_6b();
 }
 
-void vAufgabe_6() {
+void vAufgabe_6b() 
+{
+	Weg hinweg("Hinweg", 500);
+	Weg rueckweg("Rueckweg", 500);
+	auto bmw = make_unique<PKW>("BMW", 160, 9, 60);
+	auto audi = make_unique<PKW>("Audi", 250, 10, 100);
+	auto fahrrad = make_unique<Fahrrad>("BMX", 55);
+	auto krassesf = make_unique<Fahrrad>("KrassesFah", 100);
+
+	hinweg.vAnnahme(move(bmw));
+	hinweg.vAnnahme(move(audi), 3);
+	hinweg.vAnnahme(move(fahrrad));
+	hinweg.vAnnahme(move(krassesf), 2);
+
+
+	Fahrzeug::vKopf();
+	Weg::vKopf();
+	cout << "einen Schritt (s)imulieren (-> Dauer)\n(M)ehrere Schritte simulieren (-> Schrittweite, Anzahl, Verzoegerung)\n(a)usgeben (-> H/R)\nGlobale (Z)eit ausgeben\n(K)öpfe erneut anzeigen" << endl;
+
+
+	bInitialisiereGrafik(800, 500);
+	int pKoordinaten[] = { 700, 250, 100, 250 };
+	bZeichneStrasse("Hinweg", "Rueckweg", 500, 2, pKoordinaten);
+
+	char c; //multipurpose
+	double d; //multipurpose
+	int i;
+	int i2;
+	while (true) {
+		vSetzeZeit(dGlobaleZeit);
+		hinweg.vFahrzeugeZeichnen();
+		rueckweg.vFahrzeugeZeichnen();
+		cin >> c;
+		switch (c) {
+		case 'm':
+		case 'M':
+			cin >> d;
+			cin >> i;
+			cin >> i2;
+			for (int j = 0; j < i; j++) {
+				dGlobaleZeit += d;
+				vSetzeZeit(dGlobaleZeit);
+				hinweg.vFahrzeugeZeichnen();
+				rueckweg.vFahrzeugeZeichnen();
+				vSleep(i2);
+			}
+			break;
+		case 's':
+		case 'S':
+			cin >> d;
+			dGlobaleZeit += d;
+			hinweg.vSimulieren();
+			rueckweg.vSimulieren();
+			break;
+		case 'a':
+		case 'A':
+			cin >> c;
+			switch (c) {
+			case 'h':
+			case 'H':
+				hinweg.vAusgeben(cout);
+				break;
+			case 'r':
+			case 'R':
+				rueckweg.vAusgeben(cout);
+				break;
+			}
+			break;
+		case 'z':
+		case 'Z':
+			cout << dGlobaleZeit << endl;
+			break;
+		case 'k':
+		case 'K':
+			Fahrzeug::vKopf();
+			Weg::vKopf();
+			break;
+		}
+	}
+}
+
+/*void vAufgabe_6() {
 	Weg boxgraben("Boxgraben", 200, Tempolimit::innerorts);
 	Weg autobahn("A 1", 800);
 	vector<unique_ptr<Fahrzeug>> fahrzeuge;
@@ -123,7 +205,7 @@ void vAufgabe_6() {
 			break;
 		}
 	}
-}
+}*/
 
 /*void vAufgabe_5() {
 	Weg weg("Templergraben", 300);

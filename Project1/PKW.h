@@ -16,6 +16,9 @@ public:
     void vSimulieren() override;
     void vAusgeben(ostream& o) const override;
 
+    void vZeichnen(const Weg& aWeg) const override;
+    //void vDraw() override;
+
     PKW& operator=(const PKW& p);
 };
 

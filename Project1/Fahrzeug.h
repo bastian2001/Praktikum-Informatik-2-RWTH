@@ -16,8 +16,8 @@ private:
 	double p_dTankvolumen; //nicht mehr const wegen Zuweisungsoperator
 	double p_dGesamtZeit = 0;
 	unique_ptr<Verhalten> p_pVerhalten;
-	double p_dAbschnittStrecke = 0;
 protected:
+	double p_dAbschnittStrecke = 0;
 	double p_dTankinhalt = 0;
 	double p_dMaxGeschwindigkeit;
 	bool p_bRespectSpeedLimit = true;
@@ -33,6 +33,9 @@ public:
 
 	virtual void vAusgeben(ostream& o) const override;
 	virtual void vSimulieren();
+
+	//virtual void vDraw() = 0;
+	virtual void vZeichnen(const Weg& aWeg) const = 0; //aWeg eigentlich unnötig, da das Fahrzeug über das Verhalten weiß, auf welchem Weg es sich befindet. Daher vDraw
 
 	void vNeueStrecke(Weg& w);
 	void vNeueStrecke(Weg& w, double dStartzeit);
