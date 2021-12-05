@@ -15,6 +15,8 @@ Fahrrad::Fahrrad(string sName, double dMaxGeschwindigkeit) :
 	Fahrzeug(sName, dMaxGeschwindigkeit, 0) //Tankvolumen 0, da Fahrrad
 {
 	p_bRespectSpeedLimit = false; // 7.4.4.2 "Max-Geschwindigkeit, die nur für den PKW gilt"
+
+	cout << "Fahrrad " << sName << " mit maximaler Geschwindigkeit " << dMaxGeschwindigkeit << " und ID " << p_iID << " erstellt\n";
 }
 
 Fahrrad& Fahrrad::operator=(const Fahrrad& f)

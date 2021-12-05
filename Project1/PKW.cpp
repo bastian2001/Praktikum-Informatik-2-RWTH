@@ -6,7 +6,7 @@ PKW::PKW(string sName, double dMaxGeschwindigkeit, double dVerbrauch, double dTa
 	p_dVerbrauch(dVerbrauch),
 	Fahrzeug(sName, dMaxGeschwindigkeit, dTankvolumen)
 {
-	cout << "PKW " << sName << " mit Maximalgeschwindigkeit " << dMaxGeschwindigkeit << ", Verbrauch " << dVerbrauch << " und Tankvolumen " << dTankvolumen << " erstellt\n";
+	cout << "PKW " << sName << " mit Maximalgeschwindigkeit " << dMaxGeschwindigkeit << ", Verbrauch " << dVerbrauch << " l/100km, Tankvolumen " << dTankvolumen << " l und ID " << p_iID << " erstellt\n";
 }
 
 PKW::~PKW()

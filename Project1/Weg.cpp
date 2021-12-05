@@ -10,6 +10,7 @@ Weg::Weg() :
     p_dLaenge(0),
     p_eTempolimit(Tempolimit::autobahn)
 {
+    cout << "Weg ohne Namen mit ID " << p_iID << " erstellt." << endl;
 }
 
 Weg::Weg(string sName, double dLaenge, Tempolimit eTempolimit):
@@ -17,6 +18,7 @@ Weg::Weg(string sName, double dLaenge, Tempolimit eTempolimit):
     p_dLaenge(dLaenge),
     p_eTempolimit(eTempolimit)
 {
+    cout << "Weg " << sName << " mit Tempolimit " << (int)eTempolimit << " und ID " << p_iID << " erstellt." << endl;
 }
 
 double Weg::getTempolimit() const

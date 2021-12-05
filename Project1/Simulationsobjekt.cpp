@@ -7,12 +7,12 @@ Simulationsobjekt::Simulationsobjekt(string sName):
 	p_sName(sName),
 	p_iID(p_iMaxID++)
 {
-	cout << "Simulationsobjekt " << p_sName << " mit ID " << p_iID << " erstellt\n";
+	//cout << "Simulationsobjekt " << p_sName << " mit ID " << p_iID << " erstellt\n";
 }
 
 Simulationsobjekt::~Simulationsobjekt()
 {
-	cout << "Simulationsobjekt " << p_sName << " mit ID " << p_iID << " gelöscht\n";
+	//cout << "Simulationsobjekt " << p_sName << " mit ID " << p_iID << " gelöscht\n";
 }
 
 bool Simulationsobjekt::operator==(Simulationsobjekt& f)

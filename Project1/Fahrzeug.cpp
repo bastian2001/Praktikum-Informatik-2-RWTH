@@ -17,7 +17,7 @@ Fahrzeug::Fahrzeug(string sName, double dMaxGeschwindigkeit, double dTankvolumen
 	p_dTankvolumen(dTankvolumen),
 	p_dTankinhalt(dTankvolumen / 2)
 {
-	cout << "Fahrzeug " << p_sName << " mit Maximalgeschwindigkeit " << p_dMaxGeschwindigkeit << " und ID " << p_iID << " erstellt" << endl;
+	//cout << "Fahrzeug " << p_sName << " mit Maximalgeschwindigkeit " << p_dMaxGeschwindigkeit << " und ID " << p_iID << " erstellt" << endl;
 }
 
 void Fahrzeug::vAusgeben(ostream& o) const
