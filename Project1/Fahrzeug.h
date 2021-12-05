@@ -20,6 +20,7 @@ private:
 protected:
 	double p_dTankinhalt = 0;
 	double p_dMaxGeschwindigkeit;
+	bool p_bRespectSpeedLimit = true;
 
 public:
 	virtual double dGeschwindigkeit() const;
@@ -41,7 +42,8 @@ public:
 	static int p_iMaxID;
 	static void vKopf();
 
-	double getAbschnittStrecke();
+	double getAbschnittStrecke() const;
+	bool getRespectSpeedLimit() const;
 
 	Fahrzeug& operator=(const Fahrzeug& f);
 };

@@ -15,7 +15,8 @@ using namespace std;
 //void vAufgabe_3();
 //void vAufgabe_AB1();
 //void vAufgabe_4();
-void vAufgabe_5();
+//void vAufgabe_5();
+void vAufgabe_6();
 
 
 double dGlobaleZeit = 0.0;
@@ -23,10 +24,107 @@ double dEpsilon = 0.001;
 
 
 int main() {
-	vAufgabe_5();
+	vAufgabe_6();
 }
 
-void vAufgabe_5() {
+void vAufgabe_6() {
+	Weg boxgraben("Boxgraben", 200, Tempolimit::innerorts);
+	Weg autobahn("A 1", 800);
+	vector<unique_ptr<Fahrzeug>> fahrzeuge;
+	fahrzeuge.push_back(make_unique<PKW>("BMW", 160, 9, 60));
+	fahrzeuge.push_back(make_unique<PKW>("Audi", 250, 10, 100));
+	fahrzeuge.push_back(make_unique<Fahrrad>("BMX", 55));
+	fahrzeuge.push_back(make_unique<Fahrrad>("Krasses Fahrrad", 100));
+	Fahrzeug::vKopf();
+	Weg::vKopf();
+	cout << "(s)imulieren (-> Dauer), (a)usgeben (-> ID), vAnnahme (F)ahren (-> ID, Weg-Anfangsbuchstabe), vAnnahme (P)arken (-> ID, Startzeitpunkt, Weg-Anfangsbuchstabe), Globale (Z)eit ausgeben, (K)öpfe erneut anzeigen" << endl;
+
+	while (true) {
+		char operation;
+		char streetLetter;
+		double deltaT;
+		int id;
+		double startzeit;
+		cin >> operation;
+		switch (operation) {
+		case 's':
+		case 'S':
+			cin >> deltaT;
+			dGlobaleZeit += deltaT;
+			autobahn.vSimulieren();
+			boxgraben.vSimulieren();
+			break;
+		case 'a':
+		case 'A':
+			cin >> id;
+			id -= 2;
+			if (id == -2)
+				boxgraben.vAusgeben(cout);
+			else if (id == -1)
+				autobahn.vAusgeben(cout);
+			if (id < fahrzeuge.size()) {
+				try {
+					fahrzeuge[id]->vAusgeben(cout);
+				}
+				catch (exception e) {
+					cout << "Bitte nur Fahrzeuge abfragen, die nicht auf dem Weg sind (Besitz des unique_ptr wurde abgegeben)." << endl;
+				}
+			}
+			break;
+		case 'f':
+		case 'F':
+			cin >> id;
+			id-= 2;
+			cin >> streetLetter;
+			if (id < 0)
+				continue;
+			if (id < fahrzeuge.size()) {
+				switch (streetLetter) {
+				case 'b':
+				case 'B':
+					boxgraben.vAnnahme(move(fahrzeuge[id]));
+					break;
+				case 'a':
+				case 'A':
+					boxgraben.vAnnahme(move(fahrzeuge[id]));
+					break;
+				}
+			}
+			break;
+		case 'p':
+		case 'P':
+			cin >> id;
+			cin >> startzeit;
+			id -= 2;
+			cin >> streetLetter;
+			if (id < 0)
+				continue;
+			if (id < fahrzeuge.size()) {
+				switch (streetLetter) {
+				case 'b':
+				case 'B':
+					boxgraben.vAnnahme(move(fahrzeuge[id]), startzeit);
+					break;
+				case 'a':
+				case 'A':
+					boxgraben.vAnnahme(move(fahrzeuge[id]), startzeit);
+					break;
+				}
+			}
+		case 'z':
+		case 'Z':
+			cout << dGlobaleZeit << endl;
+			break;
+		case 'k':
+		case 'K':
+			Fahrzeug::vKopf();
+			Weg::vKopf();
+			break;
+		}
+	}
+}
+
+/*void vAufgabe_5() {
 	Weg weg("Templergraben", 300);
 	vector<unique_ptr<Fahrzeug>> fahrzeuge;
 	fahrzeuge.push_back(make_unique<PKW>("BMW", 160, 9, 60));
@@ -93,7 +191,7 @@ void vAufgabe_5() {
 			break;
 		}
 	}
-}
+}*/
 
 /*void vAufgabe_4() {
 	Weg weg("Mein Weg", 100, Tempolimit::innerorts);

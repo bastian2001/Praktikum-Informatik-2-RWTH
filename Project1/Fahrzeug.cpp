@@ -78,9 +78,14 @@ void Fahrzeug::vKopf() {
 	cout << setfill('-') << setw(77) << '-' << endl;
 }
 
-double Fahrzeug::getAbschnittStrecke()
+double Fahrzeug::getAbschnittStrecke() const
 {
 	return p_dAbschnittStrecke;
+}
+
+bool Fahrzeug::getRespectSpeedLimit() const
+{
+	return p_bRespectSpeedLimit;
 }
 
 Fahrzeug& Fahrzeug::operator=(const Fahrzeug& f)
