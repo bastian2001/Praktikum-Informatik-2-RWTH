@@ -25,13 +25,29 @@ std::uniform_int_distribution<int> dist(0, 9);
 //void vAufgabe_6();
 void vAufgabe_6Grafik();
 //void vAufgabe_6a();
+void AB2Test4();
 
 double dGlobaleZeit = 0.0;
 double dEpsilon = 0.001;
 
 
 int main() {
-	vAufgabe_6Grafik();
+	list<int> li;
+	li.push_back(10);
+	cout << li.begin();
+}
+
+void AB2Test4() {
+	vertagt::VListe<int> li;
+	for (int i = 0; i < 10; ++i)
+		li.push_back(i);
+	li.vAktualisieren();
+	for (auto it = li.begin(); it != li.end(); ++it)
+		if (*it % 2 == 1)
+			li.erase(it);
+	li.push_back(10);
+	li.push_front(-1);
+	return;
 }
 
 /*void vAufgabe_6a() {
@@ -69,9 +85,9 @@ int main() {
 
 void vAufgabe_6Grafik()
 {
-	Weg hinweg("Hinweg", 500, Tempolimit::innerorts);
+	Weg hinweg("Hinweg", 500);
 	Weg rueckweg("Rueckweg", 500);
-	auto bmw = make_unique<PKW>("BMW", 160, 9, 60);
+	auto bmw = make_unique<PKW>("BMW", 150, 2, 60);
 	auto audi = make_unique<PKW>("Audi", 250, 10, 100);
 	auto fahrrad = make_unique<Fahrrad>("BMX", 55);
 	auto krassesf = make_unique<Fahrrad>("KrassesFah", 100);
