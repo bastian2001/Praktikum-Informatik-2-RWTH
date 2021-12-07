@@ -32,9 +32,7 @@ double dEpsilon = 0.001;
 
 
 int main() {
-	list<int> li;
-	li.push_back(10);
-	cout << li.begin();
+	vAufgabe_6Grafik();
 }
 
 void AB2Test4() {
@@ -85,6 +83,7 @@ void AB2Test4() {
 
 void vAufgabe_6Grafik()
 {
+	//Wege und Fahrzeuge erzeugen
 	Weg hinweg("Hinweg", 500);
 	Weg rueckweg("Rueckweg", 500);
 	auto bmw = make_unique<PKW>("BMW", 150, 2, 60);
@@ -93,56 +92,69 @@ void vAufgabe_6Grafik()
 	auto krassesf = make_unique<Fahrrad>("KrassesFah", 100);
 	cout << endl << endl;
 
+	//Fahrzeuge auf Weg setzen
 	hinweg.vAnnahme(move(bmw));
 	hinweg.vAnnahme(move(audi), 3);
 	hinweg.vAnnahme(move(fahrrad));
 	hinweg.vAnnahme(move(krassesf), 2);
 
+	//Menü
 	cout << endl << endl;
 	cout << "	1) Einen Schritt (s)imulieren (-> Dauer)\n	2) (M)ehrere Schritte simulieren (-> Schrittweite, Anzahl, Verzoegerung)\n	3) (a)usgeben (-> H/R)\n	4) Globale (Z)eit ausgeben\n	5) (K)öpfe erneut anzeigen" << endl;
 
+	//Köpfe
 	cout << endl << endl;
 	Fahrzeug::vKopf();
 	Weg::vKopf();
 	cout << endl ;
 
-
+	//Grafik, Weg
 	bInitialisiereGrafik(800, 500);
 	int pKoordinaten[] = { 700, 250, 100, 250 };
 	bZeichneStrasse("Hinweg", "Rueckweg", 500, 2, pKoordinaten);
 
 	char c; //multipurpose
-	double d; //multipurpose
-	int i;
-	int i2;
+	double dauer;
+	int anzahl;
+	int verzoegerung;
+
+	//Operationsschleife
 	while (true) {
+		//passt semantisch eher ans Ende, aber damit beim ersten Mal auch gezeichnet wird:
 		vSetzeZeit(dGlobaleZeit);
 		hinweg.vFahrzeugeZeichnen();
 		rueckweg.vFahrzeugeZeichnen();
+
+		//Operationen ausführen
 		cin >> c;
 		switch (c) {
+			//Mehrere Schritte simulieren
 		case 'm':
 		case 'M':
-			cin >> d;
-			cin >> i;
-			cin >> i2;
-			for (int j = 0; j < i; j++) {
-				dGlobaleZeit += d;
+			cin >> dauer;
+			cin >> anzahl;
+			cin >> verzoegerung;
+			for (int j = 0; j < anzahl; j++) {
+				dGlobaleZeit += dauer;
 				vSetzeZeit(dGlobaleZeit);
 				hinweg.vSimulieren();
 				rueckweg.vSimulieren();
 				hinweg.vFahrzeugeZeichnen();
 				rueckweg.vFahrzeugeZeichnen();
-				vSleep(i2);
+				vSleep(verzoegerung);
 			}
 			break;
+
+			//Einen Schritt simulieren
 		case 's':
 		case 'S':
-			cin >> d;
-			dGlobaleZeit += d;
+			cin >> dauer;
+			dGlobaleZeit += dauer;
 			hinweg.vSimulieren();
 			rueckweg.vSimulieren();
 			break;
+
+			//Einen Weg ausgeben
 		case 'a':
 		case 'A':
 			cin >> c;
@@ -157,10 +169,14 @@ void vAufgabe_6Grafik()
 				break;
 			}
 			break;
+
+			//Zeit ausgeben
 		case 'z':
 		case 'Z':
 			cout << dGlobaleZeit << endl;
 			break;
+
+			//Köpfe ausgeben
 		case 'k':
 		case 'K':
 			Fahrzeug::vKopf();

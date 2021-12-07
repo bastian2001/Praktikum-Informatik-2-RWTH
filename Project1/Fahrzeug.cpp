@@ -17,11 +17,13 @@ Fahrzeug::Fahrzeug(string sName, double dMaxGeschwindigkeit, double dTankvolumen
 	p_dTankvolumen(dTankvolumen),
 	p_dTankinhalt(dTankvolumen / 2)
 {
+	// Fahrzeug ist abstrakt (vZeichnen), daher keine Ausgabe im Konstruktor nötig
 	//cout << "Fahrzeug " << p_sName << " mit Maximalgeschwindigkeit " << p_dMaxGeschwindigkeit << " und ID " << p_iID << " erstellt" << endl;
 }
 
 void Fahrzeug::vAusgeben(ostream& o) const
 {
+	//Ausgabe der Basiseigenschaften, die Subklassen geben die evtl. restlichen Parameter aus
 	o << setfill(' ') << setw(3) << p_iID << "  "
 		<< setw(10) << setiosflags(ios::left) << p_sName << ' '
 		<< setw(20) << setprecision(2) << resetiosflags(ios::left) << setiosflags(ios::fixed) << p_dMaxGeschwindigkeit << ' '
@@ -31,14 +33,17 @@ void Fahrzeug::vAusgeben(ostream& o) const
 
 void Fahrzeug::vSimulieren()
 {
+	//Fahrzeug wird nur simuliert, falls die Zeit voran geht
 	double delta = dGlobaleZeit - p_dZeit;
 	if (delta > 0) {
 		double strecke = 0;
 		p_dZeit = dGlobaleZeit;
 		try {
+			//dStrecke berücksichtigt erlaubt, möglich und Ende des Weges bzw. 0 falls parkend
 			strecke = p_pVerhalten->dStrecke(*this, delta);
 		}
 		catch (Fahrausnahme& e) {
+			//Losfahren/Streckenende
 			e.vBearbeiten();
 			return;
 		}
@@ -50,6 +55,7 @@ void Fahrzeug::vSimulieren()
 
 void Fahrzeug::vNeueStrecke(Weg& w)
 {
+	//Lässt das Fahrzeug von neuer Strecke wissen, daher muss hier der Abschnittszähler zurückgesetzt werden
 	p_pVerhalten = make_unique<Fahren>(w);
 	p_dAbschnittStrecke = 0;
 	p_dZeit = dGlobaleZeit;
@@ -57,11 +63,14 @@ void Fahrzeug::vNeueStrecke(Weg& w)
 
 void Fahrzeug::vNeueStrecke(Weg& w, double dStartzeit)
 {
+	//Lässt das Fahrzeug von neuer Strecke wissen, daher muss hier der Abschnittszähler zurückgesetzt werden
 	p_pVerhalten = make_unique<Parken>(w, dStartzeit);
 	p_dAbschnittStrecke = 0;
 }
 
-double Fahrzeug::dTanken(double dLiter) {
+double Fahrzeug::dTanken(double dLiter)
+{
+	//Tatsächliche Füllung um delta wird begrenzt durch Tankgröße und zur Verfügung stehende Liter
 	double delta = p_dTankvolumen - p_dTankinhalt;
 	if (delta > dLiter)
 		delta = dLiter;
@@ -93,6 +102,11 @@ bool Fahrzeug::getRespectSpeedLimit() const
 double Fahrzeug::getTankinhalt() const
 {
 	return p_dTankinhalt;
+}
+
+double Fahrzeug::getGesamtStrecke() const
+{
+	return p_dGesamtStrecke;
 }
 
 Fahrzeug& Fahrzeug::operator=(const Fahrzeug& f)
@@ -127,5 +141,5 @@ ostream& operator<<(ostream& o, const Fahrzeug& f) {
 }
 
 bool operator<(const Fahrzeug& aFahrzeug1, const Fahrzeug& aFahrzeug2) {
-	return aFahrzeug1.p_dGesamtStrecke < aFahrzeug2.p_dGesamtStrecke;
+	return aFahrzeug1.getGesamtStrecke() < aFahrzeug2.getGesamtStrecke();
 }

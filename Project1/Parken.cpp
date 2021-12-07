@@ -14,6 +14,7 @@ Parken::Parken(Weg& aWeg, double dStartzeitpunkt):
 {
 }
 
+//0 falls das Auto weiterhin parken soll, Losfahren-Exception falls das Auto losfahren soll
 double Parken::dStrecke(Fahrzeug& aFzg, double dZeitIntervall)
 {
 	if (p_dStartzeitpunkt < dGlobaleZeit + .000001)

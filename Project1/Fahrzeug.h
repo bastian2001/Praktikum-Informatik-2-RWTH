@@ -21,33 +21,32 @@ protected:
 	double p_dTankinhalt = 0;
 	double p_dMaxGeschwindigkeit;
 	bool p_bRespectSpeedLimit = true;
-
-public:
-	virtual double dGeschwindigkeit() const;
 	double p_dGesamtStrecke = 0;
-
+public:
+	//Konstruktoren
 	Fahrzeug(string sName = "", double dMaxGeschwindigkeit = 0, double dTankvolumen = 55);
 	// Fahrzeuge können zwar ohne Namen erstellt werden, da das aber keinen Sinn ergibt, wird dies in den Subklassen blockiert
 	Fahrzeug(Fahrzeug&) = delete;
 	~Fahrzeug();
 
-	virtual void vAusgeben(ostream& o) const override;
-	virtual void vSimulieren();
-
-	//virtual void vDraw() = 0;
-	virtual void vZeichnen(const Weg& aWeg) const = 0; //aWeg eigentlich unnötig, da das Fahrzeug über das Verhalten weiß, auf welchem Weg es sich befindet. Daher vDraw
-
-	void vNeueStrecke(Weg& w);
-	void vNeueStrecke(Weg& w, double dStartzeit);
-
-	double dTanken(double dLiter = numeric_limits<double>::infinity());
-
-	static int p_iMaxID;
-	static void vKopf();
-
+	//Getter
 	double getAbschnittStrecke() const;
 	bool getRespectSpeedLimit() const;
 	double getTankinhalt() const;
+	double getGesamtStrecke() const;
+
+	//Operationen
+	virtual void vSimulieren();
+	void vNeueStrecke(Weg& w);
+	void vNeueStrecke(Weg& w, double dStartzeit);
+	double dTanken(double dLiter = numeric_limits<double>::infinity());
+
+	virtual double dGeschwindigkeit() const;
+
+	//Nutzerausgabe/-anzeige
+	static void vKopf();
+	virtual void vZeichnen(const Weg& aWeg) const = 0; //aWeg eigentlich unnötig, da das Fahrzeug über das Verhalten weiß, auf welchem Weg es sich befindet. Daher vDraw
+	virtual void vAusgeben(ostream& o) const override;
 
 	Fahrzeug& operator=(const Fahrzeug& f);
 	bool operator==(const Fahrzeug& f) const;

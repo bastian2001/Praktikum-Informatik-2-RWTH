@@ -5,6 +5,7 @@ Streckenende::Streckenende(Fahrzeug& aFzg, Weg& aWeg) :
 {
 }
 
+//Am Streckende wird der Pointer abgegeben, das Fahrzeug wird gelöscht
 void Streckenende::vBearbeiten()
 {
 	cout << "Streckenende-Ausnahme " << p_aFahrzeug.getName() << " " << p_aWeg.getName() << endl;

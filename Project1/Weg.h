@@ -11,23 +11,30 @@ class Weg :
 {
 private:
     const double p_dLaenge;
-    vertagt::VListe <unique_ptr<Fahrzeug>> p_pFahrzeuge;
-    Tempolimit p_eTempolimit;
+    vertagt::VListe <unique_ptr<Fahrzeug>> p_pFahrzeuge; //Weg ist "Besitzer" der Fahrzeuge
+    const Tempolimit p_eTempolimit;
 public:
+    //Konstruktoren
     Weg();
     Weg(string sName, double dLaenge, Tempolimit eTempolimit = Tempolimit::autobahn);
     Weg(Weg&) = delete;
 
+    //Getter
     double getTempolimit() const;
+    double getLaenge() const;
+
+    //Operationen
     void vSimulieren() override;
+    void vAnnahme(unique_ptr<Fahrzeug> pFahrzeug); //Fahren
+    void vAnnahme(unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit); //Parken bis dStartzeit
+    unique_ptr<Fahrzeug> pAbgabe(const Fahrzeug& aFzg);
+
+    //Nutzerausgabe/anzeige
     void vAusgeben(ostream& o) const override;
     void vFahrzeugeZeichnen() const;
-    void vAnnahme(unique_ptr<Fahrzeug> pFahrzeug);
-    void vAnnahme(unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit);
-    unique_ptr<Fahrzeug> pAbgabe(const Fahrzeug& aFzg);
+
     static void vKopf();
 
-    double getLaenge() const;
 };
 
 

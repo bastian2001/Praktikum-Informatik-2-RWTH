@@ -37,10 +37,3 @@ void Fahrrad::vZeichnen(const Weg& aWeg) const
 	bZeichneFahrrad(p_sName, aWeg.getName(), p_dAbschnittStrecke / aWeg.getLaenge(), dGeschwindigkeit());
 }
 
-/*void Fahrrad::vDraw()
-{
-	const Weg& aWeg = p_pVerhalten->getWeg();
-
-	bZeichneFahrrad(p_sName, aWeg.getName(), getAbschnittStrecke() / aWeg.getLaenge(), );
-}*/
-

@@ -9,8 +9,8 @@ namespace vertagt
 	class VListe
 	{
 	private:
-		std::list<T> p_objekte;
-		std::list<std::unique_ptr<VAktion<T>>> p_aktionen;
+		std::list<T> p_objekte; //enthält die Objekte des Typs T
+		std::list<std::unique_ptr<VAktion<T>>> p_aktionen; //Enthält Aktionen, die für die Liste gescheduled werden und ausgeführt werden, sobald vAktualisieren aufgerufen wird
 
 	public:
 		// Typdefinitionen
@@ -28,7 +28,7 @@ namespace vertagt
 
 		void clear()
 		{
-			p_objekte.clear();
+			p_objekte.clear(); //Löscht (jetzt) alle Objekte
 		}
 
 		// Lesefunktionen

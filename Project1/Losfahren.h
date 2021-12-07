@@ -7,7 +7,6 @@ public:
     Losfahren() = delete;
     Losfahren(Fahrzeug& aFzg, Weg& aWeg);
 
-
     void vBearbeiten() override;
 };
 

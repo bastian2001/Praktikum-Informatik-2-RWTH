@@ -29,11 +29,14 @@ double Weg::getTempolimit() const
 
 void Weg::vSimulieren()
 {
+    //Aktualisiert die Fahrzeugliste
     p_pFahrzeuge.vAktualisieren();
     for (auto& pFahrzeug : p_pFahrzeuge)
     {
+        //Simuliert jedes enthaltene Fahrzeug
         pFahrzeug->vSimulieren();
     }
+    //Aktualisiert danach die Fahrzeugliste erneut
     p_pFahrzeuge.vAktualisieren();
 }
 
@@ -43,11 +46,11 @@ void Weg::vAusgeben(ostream& o) const
         << setw(10) << setiosflags(ios::left) << p_sName << ' '
         << setw(10) << setprecision(2) << resetiosflags(ios::left) << setiosflags(ios::fixed) << p_dLaenge << ' ' << '(';
     for (auto& pFahrzeug : p_pFahrzeuge) {
-        o << pFahrzeug->getName() << ", ";
+        o << pFahrzeug->getName() << ", "; //Gibt jeden Fahrzeugnamen aus
     }
     o << ")\n";
     for (auto& p : p_pFahrzeuge) {
-        cout << *p;
+        cout << *p; //Da der Weg die Fahrzeuge besitzt, ist eine Ausgabe von außen nicht möglich. Also wird jedes Fahrzeug auf dem Weg mit augegeben
     }
 }
 
@@ -58,28 +61,28 @@ void Weg::vFahrzeugeZeichnen() const
     }
 }
 
-void Weg::vAnnahme(unique_ptr<Fahrzeug> pFahrzeug)
+void Weg::vAnnahme(unique_ptr<Fahrzeug> pFahrzeug) //Nimmt ein Fahrzeug fahrend auf
 {
     cout << pFahrzeug->getName() << " wird fahrend auf " << p_sName << " gesetzt" << endl;
     pFahrzeug->vNeueStrecke(*this);
     p_pFahrzeuge.push_back(move(pFahrzeug));
 }
 
-void Weg::vAnnahme(unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit)
+void Weg::vAnnahme(unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit)//Nimmt ein Fahrzeug parkend auf
 {
     cout << pFahrzeug->getName() << " wird parkend auf " << p_sName << " gesetzt und fährt nach " << dStartzeit << "h los." << endl;
     pFahrzeug->vNeueStrecke(*this, dStartzeit);
     p_pFahrzeuge.push_front(move(pFahrzeug));
 }
 
-unique_ptr<Fahrzeug> Weg::pAbgabe(const Fahrzeug& aFzg)
+unique_ptr<Fahrzeug> Weg::pAbgabe(const Fahrzeug& aFzg) // Gibt ein Fahrzeug ab
 {
     auto it = p_pFahrzeuge.begin();
     while(it != p_pFahrzeuge.end()) {
-        if (**it == aFzg) {
+        if (**it == aFzg) { //Sucht das Fahrzeug
             auto pFahrzeug = move(*it);
-            p_pFahrzeuge.erase(it);
-            return move(pFahrzeug);
+            p_pFahrzeuge.erase(it); // Entfernt es. Es wird beim nächsten Simulationsschritt bei vAktualisieren dann tatsächlich entfernt
+            return move(pFahrzeug); //unique_ptr wird aber bereits jetzt übergeben
         }
         it++;
     }
