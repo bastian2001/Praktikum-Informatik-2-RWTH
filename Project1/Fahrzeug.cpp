@@ -133,8 +133,6 @@ Fahrzeug::~Fahrzeug()
 	cout << "Fahrzeug " << p_sName << " mit ID " << p_iID << " gelöscht"  << endl;
 }
 
-int Fahrzeug::p_iMaxID = 0;
-
 ostream& operator<<(ostream& o, const Fahrzeug& f) {
 	f.vAusgeben(o);
 	return o;
