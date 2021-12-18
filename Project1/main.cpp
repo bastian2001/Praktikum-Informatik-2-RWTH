@@ -23,19 +23,125 @@ std::uniform_int_distribution<int> dist(0, 9);
 //void vAufgabe_4();
 //void vAufgabe_5();
 //void vAufgabe_6();
-void vAufgabe_6Grafik();
+//void vAufgabe_6Grafik_AB2();
 //void vAufgabe_6a();
-void AB2Test4();
+//void AB2Test4();
+void vAufgabe6_AB3();
 
 double dGlobaleZeit = 0.0;
 double dEpsilon = 0.001;
 
 
 int main() {
-	vAufgabe_6Grafik();
+	vAufgabe6_AB3();
 }
 
-void AB2Test4() {
+void vAufgabe6_AB3()
+{
+	//Wege und Fahrzeuge erzeugen
+	Weg hinweg("Hinweg", 500);
+	Weg rueckweg("Rueckweg", 500);
+	auto bmw = make_unique<PKW>("BMW", 150, 2, 60);
+	auto audi = make_unique<PKW>("Audi", 250, 10, 100);
+	auto fahrrad = make_unique<Fahrrad>("BMX", 55);
+	auto krassesf = make_unique<Fahrrad>("KrassesFah", 100);
+	cout << endl << endl;
+
+	//Fahrzeuge auf Weg setzen
+	hinweg.vAnnahme(move(bmw));
+	hinweg.vAnnahme(move(audi), 3);
+	hinweg.vAnnahme(move(fahrrad));
+	hinweg.vAnnahme(move(krassesf), 2);
+
+	//Menü
+	cout << endl << endl;
+	cout << "	1) Einen Schritt (s)imulieren (-> Dauer)\n	2) (M)ehrere Schritte simulieren (-> Schrittweite, Anzahl, Verzoegerung)\n	3) (a)usgeben (-> H/R)\n	4) Globale (Z)eit ausgeben\n	5) (K)öpfe erneut anzeigen" << endl;
+
+	//Köpfe
+	cout << endl << endl;
+	Fahrzeug::vKopf();
+	Weg::vKopf();
+	cout << endl;
+
+	//Grafik, Weg
+	bInitialisiereGrafik(800, 500);
+	int pKoordinaten[] = { 700, 250, 100, 250 };
+	bZeichneStrasse("Hinweg", "Rueckweg", 500, 2, pKoordinaten);
+
+	char c; //multipurpose
+	double dauer;
+	int anzahl;
+	int verzoegerung;
+
+	//Operationsschleife
+	while (true) {
+		//passt semantisch eher ans Ende, aber damit beim ersten Mal auch gezeichnet wird:
+		vSetzeZeit(dGlobaleZeit);
+		hinweg.vFahrzeugeZeichnen();
+		rueckweg.vFahrzeugeZeichnen();
+
+		//Operationen ausführen
+		cin >> c;
+		switch (c) {
+			//Mehrere Schritte simulieren
+		case 'm':
+		case 'M':
+			cin >> dauer;
+			cin >> anzahl;
+			cin >> verzoegerung;
+			for (int j = 0; j < anzahl; j++) {
+				dGlobaleZeit += dauer;
+				vSetzeZeit(dGlobaleZeit);
+				hinweg.vSimulieren();
+				rueckweg.vSimulieren();
+				hinweg.vFahrzeugeZeichnen();
+				rueckweg.vFahrzeugeZeichnen();
+				vSleep(verzoegerung);
+			}
+			break;
+
+			//Einen Schritt simulieren
+		case 's':
+		case 'S':
+			cin >> dauer;
+			dGlobaleZeit += dauer;
+			hinweg.vSimulieren();
+			rueckweg.vSimulieren();
+			break;
+
+			//Einen Weg ausgeben
+		case 'a':
+		case 'A':
+			cin >> c;
+			switch (c) {
+			case 'h':
+			case 'H':
+				hinweg.vAusgeben(cout);
+				break;
+			case 'r':
+			case 'R':
+				rueckweg.vAusgeben(cout);
+				break;
+			}
+			break;
+
+			//Zeit ausgeben
+		case 'z':
+		case 'Z':
+			cout << dGlobaleZeit << endl;
+			break;
+
+			//Köpfe ausgeben
+		case 'k':
+		case 'K':
+			Fahrzeug::vKopf();
+			Weg::vKopf();
+			break;
+		}
+	}
+}
+
+/*void AB2Test4() {
 	vertagt::VListe<int> li;
 	for (int i = 0; i < 10; ++i)
 		li.push_back(i);
@@ -46,7 +152,7 @@ void AB2Test4() {
 	li.push_back(10);
 	li.push_front(-1);
 	return;
-}
+}*/
 
 /*void vAufgabe_6a() {
 	vertagt::VListe<int> list;
@@ -81,7 +187,7 @@ void AB2Test4() {
 	cout << endl;
 }*/
 
-void vAufgabe_6Grafik()
+/*void vAufgabe_6Grafik_AB2()
 {
 	//Wege und Fahrzeuge erzeugen
 	Weg hinweg("Hinweg", 500);
@@ -184,7 +290,7 @@ void vAufgabe_6Grafik()
 			break;
 		}
 	}
-}
+}*/
 
 /*void vAufgabe_6() {
 	Weg boxgraben("Boxgraben", 200, Tempolimit::innerorts);
