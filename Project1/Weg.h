@@ -13,15 +13,20 @@ private:
     const double p_dLaenge;
     vertagt::VListe <unique_ptr<Fahrzeug>> p_pFahrzeuge; //Weg ist "Besitzer" der Fahrzeuge
     const Tempolimit p_eTempolimit;
+    const bool p_bUeberholverbot;
+    double p_dSchranke;
 public:
     //Konstruktoren
     Weg();
-    Weg(string sName, double dLaenge, Tempolimit eTempolimit = Tempolimit::autobahn);
+    Weg(string sName, double dLaenge, Tempolimit eTempolimit = Tempolimit::autobahn, bool bUeberholverbot = true);
     Weg(Weg&) = delete;
 
     //Getter
     double getTempolimit() const;
     double getLaenge() const;
+    double getSchranke() const;
+    //Setter
+    void setSchranke(double dSchranke);
 
     //Operationen
     void vSimulieren() override;

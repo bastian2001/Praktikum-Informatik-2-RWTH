@@ -14,12 +14,13 @@ Weg::Weg() :
     cout << "Weg ohne Namen mit ID " << p_iID << " erstellt." << endl;
 }
 
-Weg::Weg(string sName, double dLaenge, Tempolimit eTempolimit):
+Weg::Weg(string sName, double dLaenge, Tempolimit eTempolimit, bool bUeberholverbot):
     Simulationsobjekt::Simulationsobjekt(sName),
     p_dLaenge(dLaenge),
-    p_eTempolimit(eTempolimit)
+    p_eTempolimit(eTempolimit),
+    p_bUeberholverbot(bUeberholverbot)
 {
-    cout << "Weg " << sName << " mit Tempolimit " << (int)eTempolimit << " und ID " << p_iID << " erstellt." << endl;
+    cout << "Weg " << sName << " mit Tempolimit " << (int)eTempolimit << " und ID, " << p_iID << (bUeberholverbot ? "mit" : "ohne") << " Überholverbot, erstellt." << endl;
 }
 
 double Weg::getTempolimit() const
@@ -101,6 +102,18 @@ void Weg::vKopf()
 double Weg::getLaenge() const
 {
     return p_dLaenge;
+}
+
+double Weg::getSchranke() const
+{
+    if (p_bUeberholverbot)
+        return p_dSchranke;
+    return p_dLaenge;
+}
+
+void Weg::setSchranke(double dSchranke)
+{
+    p_dSchranke = dSchranke;
 }
 
 

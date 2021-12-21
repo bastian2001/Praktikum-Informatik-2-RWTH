@@ -41,10 +41,11 @@ void vAufgabe6_AB3()
 	//Wege und Fahrzeuge erzeugen
 	Weg hinweg("Hinweg", 500);
 	Weg rueckweg("Rueckweg", 500);
-	auto bmw = make_unique<PKW>("BMW", 150, 2, 60);
-	auto audi = make_unique<PKW>("Audi", 250, 10, 100);
-	auto fahrrad = make_unique<Fahrrad>("BMX", 55);
-	auto krassesf = make_unique<Fahrrad>("KrassesFah", 100);
+	list<unique_ptr<Fahrzeug>> aFahrzeuge;
+	aFahrzeuge.push_back(make_unique<PKW>("BMW", 150, 2, 60));
+	aFahrzeuge.push_back(make_unique<PKW>("Audi", 250, 10, 100));
+	aFahrzeuge.push_back(make_unique<Fahrrad>("BMX", 55));
+	aFahrzeuge.push_back(make_unique<Fahrrad>("KrassesFah", 100));
 	cout << endl << endl;
 
 	//Fahrzeuge auf Weg setzen
