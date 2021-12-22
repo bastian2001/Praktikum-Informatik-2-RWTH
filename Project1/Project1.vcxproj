@@ -173,6 +173,7 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="SimuClient.dll" />
+    <None Include="SimuServer.jar" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SimuClient.lib" />

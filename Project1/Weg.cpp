@@ -9,7 +9,8 @@ using namespace std;
 Weg::Weg() :
     Simulationsobjekt::Simulationsobjekt(""),
     p_dLaenge(0),
-    p_eTempolimit(Tempolimit::autobahn)
+    p_eTempolimit(Tempolimit::autobahn),
+    p_bUeberholverbot(true)
 {
     cout << "Weg ohne Namen mit ID " << p_iID << " erstellt." << endl;
 }
@@ -32,6 +33,7 @@ void Weg::vSimulieren()
 {
     //Aktualisiert die Fahrzeugliste
     p_pFahrzeuge.vAktualisieren();
+    setSchranke(p_dLaenge);
     for (auto& pFahrzeug : p_pFahrzeuge)
     {
         //Simuliert jedes enthaltene Fahrzeug

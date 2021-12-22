@@ -22,8 +22,8 @@ PKW::~PKW()
 
 void PKW::vSimulieren()
 {
-	if (dGlobaleZeit > 2.9999 && p_dZeit <= 2.9999)
-		dTanken(); //nach 3h nachtanken
+	/*if (dGlobaleZeit > 2.9999 && p_dZeit <= 2.9999)
+		dTanken(); //nach 3h nachtanken*/
 	if (dGlobaleZeit - p_dZeit > 0)
 		// Es wird angenommen, dass für den gesamten Simulationsschritt noch genug Reserve da ist
 		//falls der PKW nur epsilon im Tank hat, soll er nicht fahren.

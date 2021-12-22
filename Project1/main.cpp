@@ -41,18 +41,18 @@ void vAufgabe6_AB3()
 	//Wege und Fahrzeuge erzeugen
 	Weg hinweg("Hinweg", 500);
 	Weg rueckweg("Rueckweg", 500);
-	list<unique_ptr<Fahrzeug>> aFahrzeuge;
-	aFahrzeuge.push_back(make_unique<PKW>("BMW", 150, 2, 60));
+	vector<unique_ptr<Fahrzeug>> aFahrzeuge;
+	aFahrzeuge.push_back(make_unique<PKW>("BMW", 150, 2, 10));
 	aFahrzeuge.push_back(make_unique<PKW>("Audi", 250, 10, 100));
 	aFahrzeuge.push_back(make_unique<Fahrrad>("BMX", 55));
 	aFahrzeuge.push_back(make_unique<Fahrrad>("KrassesFah", 100));
 	cout << endl << endl;
 
 	//Fahrzeuge auf Weg setzen
-	hinweg.vAnnahme(move(bmw));
-	hinweg.vAnnahme(move(audi), 3);
-	hinweg.vAnnahme(move(fahrrad));
-	hinweg.vAnnahme(move(krassesf), 2);
+	hinweg.vAnnahme(move(aFahrzeuge[0]));
+	hinweg.vAnnahme(move(aFahrzeuge[1]), 3);
+	hinweg.vAnnahme(move(aFahrzeuge[2]));
+	hinweg.vAnnahme(move(aFahrzeuge[3]), 2);
 
 	//Menü
 	cout << endl << endl;
