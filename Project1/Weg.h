@@ -5,6 +5,7 @@
 #include "vertagt_liste - Vorlage.h"
 using namespace std;
 
+class Kreuzung;
 class Fahrzeug;
 class Weg :
     public Simulationsobjekt
@@ -15,18 +16,23 @@ private:
     const Tempolimit p_eTempolimit;
     const bool p_bUeberholverbot;
     double p_dSchranke;
+    weak_ptr<Weg> p_pRueckweg;
+    const weak_ptr<Kreuzung> p_pZielkreuzung;
 public:
     //Konstruktoren
-    Weg();
-    Weg(string sName, double dLaenge, Tempolimit eTempolimit = Tempolimit::autobahn, bool bUeberholverbot = true);
+    //Weg();
+    Weg(string sName, double dLaenge, weak_ptr<Kreuzung> pZielkreuzung, Tempolimit eTempolimit = Tempolimit::autobahn, bool bUeberholverbot = true);
     Weg(Weg&) = delete;
 
     //Getter
     double getTempolimit() const;
     double getLaenge() const;
     double getSchranke() const;
+    shared_ptr<Weg> getRueckweg() const;
+    shared_ptr<Kreuzung> getZielkreuzung() const;
     //Setter
     void setSchranke(double dSchranke);
+    void setRueckweg(weak_ptr<Weg> pRueckweg);
 
     //Operationen
     void vSimulieren() override;

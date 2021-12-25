@@ -9,6 +9,7 @@
 #include "SimuClient.h"
 #include <random>
 #include "vertagt_liste - Vorlage.h"
+#include "Kreuzung.h"
 
 using namespace std;
 
@@ -26,17 +27,141 @@ std::uniform_int_distribution<int> dist(0, 9);
 //void vAufgabe_6Grafik_AB2();
 //void vAufgabe_6a();
 //void AB2Test4();
-void vAufgabe6_AB3();
+//void vAufgabe6_AB3();
+void vAufgabe7();
 
 double dGlobaleZeit = 0.0;
 double dEpsilon = 0.001;
 
 
 int main() {
-	vAufgabe6_AB3();
+	vAufgabe7();
 }
 
-void vAufgabe6_AB3()
+void vAufgabe7() {
+	vector<shared_ptr<Kreuzung>> pKreuzungen;
+	pKreuzungen.push_back(make_shared<Kreuzung>("Kr1", 0));
+	pKreuzungen.push_back(make_shared<Kreuzung>("Kr2", 1000));
+	pKreuzungen.push_back(make_shared<Kreuzung>("Kr3", 0));
+	pKreuzungen.push_back(make_shared<Kreuzung>("Kr4", 0));
+
+	//Kreuzungen und Wege bekannt machen
+	Kreuzung::vVerbinde("W12", "W21", 40, pKreuzungen[0], pKreuzungen[1], Tempolimit::innerorts, true);
+	Kreuzung::vVerbinde("W23a", "W32a", 115, pKreuzungen[1], pKreuzungen[2], Tempolimit::autobahn, false);
+	Kreuzung::vVerbinde("W23b", "W32b", 40, pKreuzungen[1], pKreuzungen[2], Tempolimit::innerorts, true);
+	Kreuzung::vVerbinde("W24", "W42", 55, pKreuzungen[1], pKreuzungen[3], Tempolimit::innerorts, true);
+	Kreuzung::vVerbinde("W34", "W43", 85, pKreuzungen[2], pKreuzungen[3], Tempolimit::autobahn, false);
+	Kreuzung::vVerbinde("W44a", "W44b", 130, pKreuzungen[3], pKreuzungen[3], Tempolimit::landstrasse, false);
+
+	//Grafik, Weg
+	bInitialisiereGrafik(1000, 600);
+	bZeichneKreuzung(680, 40);
+	bZeichneKreuzung(680, 300);
+	bZeichneKreuzung(680, 570);
+	bZeichneKreuzung(320, 300);
+	int koordinaten1[4] = { 680, 40, 680, 300 };
+	int koordinaten2[12] = { 680, 300, 850, 300, 970, 390, 970, 500, 850, 570, 680, 570 };
+	int koordinaten3[4] = { 680, 300, 680, 570 };
+	int koordinaten4[4] = { 680, 300, 320, 300 };
+	int koordinaten5[10] = { 680, 570, 500, 570, 350, 510, 320, 420, 320, 300 };
+	int koordinaten6[14] = { 320, 300, 320, 150, 200, 60, 80, 90, 70, 250, 170, 300, 320, 300 };
+	bZeichneStrasse("W12", "W21", 40, 2, koordinaten1);
+	bZeichneStrasse("W23a", "W32a", 115, 6, koordinaten2);
+	bZeichneStrasse("W23b", "W32b", 40, 2, koordinaten3);
+	bZeichneStrasse("W24", "W42", 55, 2, koordinaten4);
+	bZeichneStrasse("W34", "W43", 85, 5, koordinaten5);
+	bZeichneStrasse("W44a", "W44b", 130, 7, koordinaten6);
+
+	//Fahrzeuge erstellen
+	vector<unique_ptr<Fahrzeug>> aFahrzeuge;
+	aFahrzeuge.push_back(make_unique<PKW>("BMW", 150, 2, 100));
+	aFahrzeuge.push_back(make_unique<PKW>("Audi", 250, 10, 100));
+	aFahrzeuge.push_back(make_unique<Fahrrad>("BMX", 55));
+	aFahrzeuge.push_back(make_unique<Fahrrad>("KrassesFah", 100));
+	cout << endl << endl;
+
+	//Fahrzeuge auf Weg setzen
+	pKreuzungen[0]->vAnnahme(move(aFahrzeuge[0]));
+	pKreuzungen[0]->vAnnahme(move(aFahrzeuge[1]), 3);
+	pKreuzungen[0]->vAnnahme(move(aFahrzeuge[2]));
+	pKreuzungen[0]->vAnnahme(move(aFahrzeuge[3]), 2);
+
+	//Menü
+	cout << endl << endl;
+	cout << "	1) Einen Schritt (s)imulieren (-> Dauer)\n	2) (M)ehrere Schritte simulieren (-> Schrittweite, Anzahl, Verzoegerung)\n	3) (a)usgeben Kr(-> 1...4)\n	4) Globale (Z)eit ausgeben\n	5) (K)oepfe ausgeben" << endl;
+
+	//Köpfe
+	cout << endl << endl;
+	Fahrzeug::vKopf();
+	Weg::vKopf();
+	cout << endl;
+
+	char c; //multipurpose
+	double dauer;
+	int anzahl;
+	int krNummer;
+	int verzoegerung;
+
+	while (true) {
+		vSetzeZeit(dGlobaleZeit);
+		for (auto& pKreuzung : pKreuzungen) {
+			pKreuzung->vWegeZeichnen();
+		}
+		
+		//Operationen ausführen
+		cin >> c;
+		switch (c) {
+			//Mehrere Schritte simulieren
+		case 'm':
+		case 'M':
+			cin >> dauer;
+			cin >> anzahl;
+			cin >> verzoegerung;
+			for (int j = 0; j < anzahl; j++) {
+				dGlobaleZeit += dauer;
+				vSetzeZeit(dGlobaleZeit);
+				for (auto& pKreuzung : pKreuzungen) {
+					pKreuzung->vSimulieren();
+					pKreuzung->vWegeZeichnen();
+				}
+				vSleep(verzoegerung);
+			}
+			break;
+
+			//Einen Schritt simulieren
+		case 's':
+		case 'S':
+			cin >> dauer;
+			dGlobaleZeit += dauer;
+			for (auto& pKreuzung : pKreuzungen) {
+				pKreuzung->vSimulieren();
+			}
+			break;
+
+			//Eine Kruezung ausgeben
+		case 'a':
+		case 'A':
+			cin >> krNummer;
+			pKreuzungen[krNummer - 1]->vAusgeben(cout);
+			break;
+
+			//Zeit ausgeben
+		case 'z':
+		case 'Z':
+			cout << dGlobaleZeit << endl;
+			break;
+
+			//Köpfe ausgeben
+		case 'k':
+		case 'K':
+			Fahrzeug::vKopf();
+			Weg::vKopf();
+			break;
+		}
+	}
+}
+
+/*void vAufgabe6_AB3()
 {
 	//Wege und Fahrzeuge erzeugen
 	Weg hinweg("Hinweg", 500);
@@ -140,7 +265,7 @@ void vAufgabe6_AB3()
 			break;
 		}
 	}
-}
+}*/
 
 /*void AB2Test4() {
 	vertagt::VListe<int> li;
