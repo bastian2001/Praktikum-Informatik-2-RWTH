@@ -10,7 +10,9 @@ extern istream& operator>>(istream&, Fahrrad&);
 extern istream& operator>>(istream&, Kreuzung&);
 extern istream& operator>>(istream& i, PKW& p);
 
-void Simulation::vEinlesen(istream& i)
+extern double dGlobaleZeit;
+
+void Simulation::vEinlesen(istream& i, bool bMitGrafik)
 {
 	int zeile = 1;
 
@@ -27,7 +29,7 @@ void Simulation::vEinlesen(istream& i)
 		if (type == "KREUZUNG") {
 			shared_ptr<Kreuzung> k = make_shared<Kreuzung>();
 			i >> *k;
-			kreuzungen[k->getName()] = k;
+			p_pKreuzungen[k->getName()] = k;
 		}
 		else if (type == "STRASSE") {
 			string nameKr0, nameKr1, nameW01, nameW10;
@@ -59,7 +61,7 @@ void Simulation::vEinlesen(istream& i)
 				throw runtime_error(message);
 			}
 			try {
-				Kreuzung::vVerbinde(nameW01, nameW10, laenge, kreuzungen.at(nameKr0), kreuzungen.at(nameKr1), t, ueberholverbot);
+				Kreuzung::vVerbinde(nameW01, nameW10, laenge, p_pKreuzungen.at(nameKr0), p_pKreuzungen.at(nameKr1), t, ueberholverbot);
 			}
 			catch (exception e) {
 				string message = e.what();
@@ -76,9 +78,9 @@ void Simulation::vEinlesen(istream& i)
 			unique_ptr<PKW> p = make_unique<PKW>();
 			string nameStart;
 			double zeitLos;
-			i >> *p >> nameStart >> zeitLos;
 			try {
-				kreuzungen.at(nameStart)->vAnnahme(move(p), zeitLos);
+				i >> *p >> nameStart >> zeitLos;
+				p_pKreuzungen.at(nameStart)->vAnnahme(move(p), zeitLos);
 			}
 			catch (exception e) {
 				string message = e.what();
@@ -93,7 +95,7 @@ void Simulation::vEinlesen(istream& i)
 			double zeitLos;
 			try {
 				i >> *f >> nameStart >> zeitLos;
-				kreuzungen.at(nameStart)->vAnnahme(move(f), zeitLos);
+				p_pKreuzungen.at(nameStart)->vAnnahme(move(f), zeitLos);
 			}
 			catch (exception e) {
 				string message = e.what();
@@ -102,26 +104,26 @@ void Simulation::vEinlesen(istream& i)
 				throw runtime_error(message);
 			}
 		}
+		else if (type == "") {
+			cout << "Ende des Streams erreicht\n";
+			return;
+		}
 		else {
 			string message = "Kein gueltiges Simulationsobjekt ";
 			message += to_string(zeile);
-			throw runtime_error(message);
-		}
-		string s;
-		try {
-			getline(i, s);
-		}
-		catch (exception e) {
-			string message;
-			message = e.what();
-			message += " ";
-			message += zeile;
 			throw runtime_error(message);
 		}
 		zeile++;
 	}
 }
 
-void Simulation::vSimulieren()
+void Simulation::vSimulieren(double dDauer, double dZeitschritt)
 {
+	double start = dGlobaleZeit;
+	while (dGlobaleZeit <= start + dDauer + .000001){
+		for (auto& kreuzung : p_pKreuzungen) {
+			kreuzung.second->vSimulieren();
+		}
+		dGlobaleZeit += dZeitschritt;
+	}
 }
