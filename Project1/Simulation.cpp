@@ -5,6 +5,7 @@
 #include "Weg.h"
 #include <fstream>
 #include <vector>
+#include "SimuClient.h"
 using namespace std;
 extern istream& operator>>(istream&, Fahrrad&);
 extern istream& operator>>(istream&, Kreuzung&);
@@ -30,6 +31,11 @@ void Simulation::vEinlesen(istream& i, bool bMitGrafik)
 			shared_ptr<Kreuzung> k = make_shared<Kreuzung>();
 			i >> *k;
 			p_pKreuzungen[k->getName()] = k;
+			if (bMitGrafik) {
+				int x, y;
+				i >> x >> y;
+				bZeichneKreuzung(x, y);
+			}
 		}
 		else if (type == "STRASSE") {
 			string nameKr0, nameKr1, nameW01, nameW10;
@@ -72,6 +78,20 @@ void Simulation::vEinlesen(istream& i, bool bMitGrafik)
 				string message = "Sonstiges Problem in Zeile ";
 				message += zeile;
 				throw runtime_error(message);
+			}
+
+			if (bMitGrafik) {
+				int anzahlKoordinaten;
+				i >> anzahlKoordinaten;
+				int *koordinaten = (int*)malloc(anzahlKoordinaten * 2 * sizeof(int));
+				int x;
+				int counter = 0;
+				while (counter < anzahlKoordinaten * 2) {
+					i >> x;
+					koordinaten[counter] = x;
+					counter++;
+				}
+				bZeichneStrasse(nameW01, nameW10, laenge, anzahlKoordinaten, koordinaten);
 			}
 		}
 		else if (type == "PKW") {
@@ -121,8 +141,10 @@ void Simulation::vSimulieren(double dDauer, double dZeitschritt)
 {
 	double start = dGlobaleZeit;
 	while (dGlobaleZeit <= start + dDauer + .000001){
+		vSetzeZeit(dGlobaleZeit);
 		for (auto& kreuzung : p_pKreuzungen) {
 			kreuzung.second->vSimulieren();
+			kreuzung.second->vWegeZeichnen();
 		}
 		dGlobaleZeit += dZeitschritt;
 	}

@@ -32,14 +32,29 @@ std::uniform_int_distribution<int> dist(0, 9);
 //void vAufgabe6_AB3();
 //void vAufgabe7();
 //void vAufgabe8();
-void vAufgabe9();
+//void vAufgabe9();
+void vAufgabe10();
 
 double dGlobaleZeit = 0.0;
 double dEpsilon = 0.001;
 
 
 int main() {
-	vAufgabe9();
+	vAufgabe10();
+}
+
+void vAufgabe10() {
+	Simulation s;
+	ifstream file("SimuDisplay.dat");
+	bInitialisiereGrafik(1000, 1000);
+	file.exceptions(ios_base::eofbit | ios_base::failbit | ios_base::badbit);
+	try {
+		s.vEinlesen(file, true);
+	}
+	catch (runtime_error e) {
+		cout << e.what();
+	}
+	s.vSimulieren(100, .1);
 }
 
 void vAufgabe9() {

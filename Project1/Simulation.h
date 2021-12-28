@@ -8,9 +8,9 @@ using namespace std;
 class Simulation
 {
 private:
-	map<string, shared_ptr<Kreuzung>> kreuzungen;
+	map<string, shared_ptr<Kreuzung>> p_pKreuzungen;
 public:
-	void vEinlesen(istream& i);
-	void vSimulieren();
+	void vEinlesen(istream& i, bool bMitGrafik = false);
+	void vSimulieren(double dDauer, double dZeitschritt);
 };
 
