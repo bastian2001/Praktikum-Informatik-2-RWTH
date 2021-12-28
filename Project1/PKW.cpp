@@ -3,6 +3,14 @@
 
 extern double dGlobaleZeit;
 
+PKW::PKW() :
+	Fahrzeug(),
+	p_dVerbrauch(0)
+{
+	cout << "Unbenannter PKW mit ID " << p_iID
+		<< " erstellt\n";
+}
+
 PKW::PKW(string sName, double dMaxGeschwindigkeit, double dVerbrauch, double dTankvolumen):
 	p_dVerbrauch(dVerbrauch),
 	Fahrzeug(sName, dMaxGeschwindigkeit, dTankvolumen)
@@ -45,6 +53,13 @@ void PKW::vAusgeben(ostream& o) const
 	o << ' ' << setprecision(2) << setw(12) << p_dVerbrauch * p_dGesamtStrecke / 100 << endl;
 }
 
+void PKW::vEinlesen(istream& i)
+{
+	Fahrzeug::vEinlesen(i);
+	i >> p_dVerbrauch >> p_dTankvolumen;
+	p_dTankinhalt = p_dTankvolumen / 2;
+}
+
 void PKW::vZeichnen(const Weg& aWeg) const
 {
 	bZeichnePKW(p_sName, aWeg.getName(), p_dAbschnittStrecke / aWeg.getLaenge(), dGeschwindigkeit(), p_dTankinhalt);
@@ -60,4 +75,10 @@ PKW& PKW::operator=(const PKW& p)
 ostream& operator<<(ostream& o, const PKW& p) {
 	p.vAusgeben(o);
 	return o;
+}
+
+istream& operator>>(istream& i, PKW& p)
+{
+	p.vEinlesen(i);
+	return i;
 }

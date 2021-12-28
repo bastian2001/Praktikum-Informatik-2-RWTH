@@ -10,6 +10,8 @@
 #include <random>
 #include "vertagt_liste - Vorlage.h"
 #include "Kreuzung.h"
+#include <fstream>
+#include "Simulation.h"
 
 using namespace std;
 
@@ -28,14 +30,54 @@ std::uniform_int_distribution<int> dist(0, 9);
 //void vAufgabe_6a();
 //void AB2Test4();
 //void vAufgabe6_AB3();
-void vAufgabe7();
+//void vAufgabe7();
+//void vAufgabe8();
+void vAufgabe9();
 
 double dGlobaleZeit = 0.0;
 double dEpsilon = 0.001;
 
 
 int main() {
-	vAufgabe7();
+	vAufgabe9();
+}
+
+void vAufgabe9() {
+	ifstream file("Simu.dat");
+	file.exceptions(ios_base::eofbit | ios_base::failbit | ios_base::badbit);
+	try {
+		Simulation s;
+		s.vEinlesen(file);
+	}
+	catch (runtime_error e) {
+		cout << e.what();
+	}
+}
+
+void vAufgabe8() {
+	ifstream file("VO.dat");
+	file.exceptions(ios_base::eofbit | ios_base::failbit | ios_base::badbit);
+	try {
+
+		PKW p;
+		Fahrrad f;
+		Kreuzung k;
+		cout << "Erstellt\n";
+		
+		file >> p;
+		file >> f;
+		file >> k;
+
+		cout << "Eingelesen\n";
+
+		cout << p;
+		cout << f;
+		cout << k;
+	}
+	catch (runtime_error r) {
+		cout << "Error\n";
+		cout << r.what();
+	}
 }
 
 void vAufgabe7() {

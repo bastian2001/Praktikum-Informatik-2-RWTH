@@ -60,6 +60,12 @@
     <ClInclude Include="vertagt_aktion - Vorlage.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Kreuzung.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Fahrzeug.cpp">
@@ -98,11 +104,20 @@
     <ClCompile Include="Streckenende.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Kreuzung.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="SimuClient.dll" />
     <None Include="SimuServer.jar" />
+    <None Include="VO.dat" />
+    <None Include="Simu.dat" />
+    <None Include="SimuDisplay.dat" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SimuClient.lib" />

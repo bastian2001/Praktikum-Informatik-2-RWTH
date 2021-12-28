@@ -148,6 +148,7 @@
     <ClInclude Include="Losfahren.h" />
     <ClInclude Include="Parken.h" />
     <ClInclude Include="SimuClient.h" />
+    <ClInclude Include="Simulation.h" />
     <ClInclude Include="Streckenende.h" />
     <ClInclude Include="Tempolimit.h" />
     <ClInclude Include="PKW.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parken.cpp" />
     <ClCompile Include="PKW.cpp" />
+    <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="Simulationsobjekt.cpp" />
     <ClCompile Include="Streckenende.cpp" />
     <ClCompile Include="Verhalten.cpp" />
@@ -174,8 +176,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Simu.dat" />
     <None Include="SimuClient.dll" />
+    <None Include="SimuDisplay.dat" />
     <None Include="SimuServer.jar" />
+    <None Include="VO.dat" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SimuClient.lib" />

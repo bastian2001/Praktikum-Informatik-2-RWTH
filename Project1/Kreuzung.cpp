@@ -2,8 +2,14 @@
 #include "Fahrzeug.h"
 #include <random>
 
+Kreuzung::Kreuzung():
+	Simulationsobjekt(),
+	p_dTankstelle(0)
+{
+}
+
 Kreuzung::Kreuzung(string sName, double dTankstelle):
-	Simulationsobjekt::Simulationsobjekt(sName),
+	Simulationsobjekt(sName),
 	p_dTankstelle(dTankstelle)
 {
 }
@@ -21,6 +27,14 @@ void Kreuzung::vVerbinde(string sName01, string sName10, double dLaenge, shared_
 	pWeg10->setRueckweg(pWeg01);
 	pKreuzung0->vAddWeg(pWeg01);
 	pKreuzung1->vAddWeg(pWeg10);
+}
+
+Kreuzung& Kreuzung::operator=(const Kreuzung& k)
+{
+	Simulationsobjekt::operator=(k);
+	p_dTankstelle = k.p_dTankstelle;
+	p_pWege = k.p_pWege;
+	return *this;
 }
 
 void Kreuzung::vTanken(Fahrzeug& aFzg)
@@ -63,6 +77,12 @@ void Kreuzung::vAusgeben(ostream& o) const
 	cout << endl;
 }
 
+void Kreuzung::vEinlesen(istream& i)
+{
+	Simulationsobjekt::vEinlesen(i);
+	i >> p_dTankstelle;
+}
+
 void Kreuzung::vWegeZeichnen() const
 {
 	for (auto& pWeg : p_pWege) {
@@ -95,4 +115,16 @@ Weg& Kreuzung::pZufaelligerWeg(const Weg& aWeg) const
 			it++;
 	}
 	return **it;
+}
+
+istream& operator>>(istream& i, Kreuzung& k)
+{
+	k.vEinlesen(i);
+	return i;
+}
+
+ostream& operator<<(ostream& o, const Kreuzung& k)
+{
+	k.vAusgeben(o);
+	return o;
 }
