@@ -54,7 +54,8 @@ void vAufgabe10() {
 	catch (runtime_error e) {
 		cout << e.what();
 	}
-	s.vSimulieren(100, .1);
+	s.vSimulieren(10, 1);
+	vBeendeGrafik();
 }
 
 void vAufgabe9() {
