@@ -9,12 +9,13 @@ class PKW :
 private:
     double p_dVerbrauch;
 public:
+    PKW();
     PKW(string sName, double dMaxGeschwindigkeit, double dVerbrauch, double dTankvolumen = 55);
-    PKW() = delete;  // PKWs nur mit Namen und Maximalgeschwindigkeit
     ~PKW();
 
     void vSimulieren() override;
     void vAusgeben(ostream& o) const override;
+    void vEinlesen(istream& i) override;
 
     void vZeichnen(const Weg& aWeg) const override;
 
@@ -23,3 +24,4 @@ public:
 
 
 ostream& operator<<(ostream& o, const PKW& p);
+istream& operator>>(istream& i, PKW& p);

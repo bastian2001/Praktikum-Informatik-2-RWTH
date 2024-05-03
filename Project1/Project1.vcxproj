@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -144,9 +144,11 @@
     <ClInclude Include="Fahren.h" />
     <ClInclude Include="Fahrrad.h" />
     <ClInclude Include="Fahrzeug.h" />
+    <ClInclude Include="Kreuzung.h" />
     <ClInclude Include="Losfahren.h" />
     <ClInclude Include="Parken.h" />
     <ClInclude Include="SimuClient.h" />
+    <ClInclude Include="Simulation.h" />
     <ClInclude Include="Streckenende.h" />
     <ClInclude Include="Tempolimit.h" />
     <ClInclude Include="PKW.h" />
@@ -161,10 +163,12 @@
     <ClCompile Include="Fahren.cpp" />
     <ClCompile Include="Fahrrad.cpp" />
     <ClCompile Include="Fahrzeug.cpp" />
+    <ClCompile Include="Kreuzung.cpp" />
     <ClCompile Include="Losfahren.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parken.cpp" />
     <ClCompile Include="PKW.cpp" />
+    <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="Simulationsobjekt.cpp" />
     <ClCompile Include="Streckenende.cpp" />
     <ClCompile Include="Verhalten.cpp" />
@@ -172,7 +176,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Simu.dat" />
     <None Include="SimuClient.dll" />
+    <None Include="SimuDisplay.dat" />
+    <None Include="SimuServer.jar" />
+    <None Include="VO.dat" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SimuClient.lib" />

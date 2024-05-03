@@ -21,8 +21,10 @@ public:
 	virtual void vSimulieren() = 0;
 	virtual void vAusgeben(ostream& o) const = 0;
 
+	virtual void vEinlesen(istream& i);
+
 	bool operator==(const Simulationsobjekt& f) const;
-	Simulationsobjekt& operator=(const Simulationsobjekt &s);
+	virtual Simulationsobjekt& operator=(const Simulationsobjekt &s);
 
 	string getName() const; //damit p_sName protected bleiben kann
 };

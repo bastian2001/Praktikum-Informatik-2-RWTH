@@ -20,6 +20,13 @@ Fahrrad::Fahrrad(string sName, double dMaxGeschwindigkeit) :
 	cout << "Fahrrad " << sName << " mit maximaler Geschwindigkeit " << dMaxGeschwindigkeit << " und ID " << p_iID << " erstellt\n";
 }
 
+Fahrrad::Fahrrad():
+	Fahrzeug()
+{
+	p_bRespectSpeedLimit = false;
+	cout << "Unbenanntes Fahrzeug mit ID " << p_iID << " erstellt.\n";
+}
+
 Fahrrad& Fahrrad::operator=(const Fahrrad& f)
 {
 	Fahrzeug::operator=(f);
@@ -32,8 +39,18 @@ void Fahrrad::vAusgeben(ostream& o) const
 	o << endl;
 }
 
+void Fahrrad::vEinlesen(istream& i) 
+{
+	Fahrzeug::vEinlesen(i);
+}
+
 void Fahrrad::vZeichnen(const Weg& aWeg) const
 {
 	bZeichneFahrrad(p_sName, aWeg.getName(), p_dAbschnittStrecke / aWeg.getLaenge(), dGeschwindigkeit());
 }
 
+istream& operator>>(istream& i, Fahrrad& f)
+{
+	f.vEinlesen(i);
+	return i;
+}

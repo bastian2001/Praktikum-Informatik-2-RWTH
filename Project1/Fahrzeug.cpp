@@ -11,6 +11,14 @@ using namespace std;
 
 extern double dGlobaleZeit;
 
+Fahrzeug::Fahrzeug(): 
+	Simulationsobjekt(),
+	p_dMaxGeschwindigkeit(0),
+	p_dTankvolumen(0),
+	p_dTankinhalt(0)
+{
+}
+
 Fahrzeug::Fahrzeug(string sName, double dMaxGeschwindigkeit, double dTankvolumen) :
 	Simulationsobjekt(sName),
 	p_dMaxGeschwindigkeit(dMaxGeschwindigkeit > 0 ? dMaxGeschwindigkeit : 0), //keine negative Maximalgeschwindigkeit
@@ -29,6 +37,12 @@ void Fahrzeug::vAusgeben(ostream& o) const
 		<< setw(20) << setprecision(2) << resetiosflags(ios::left) << setiosflags(ios::fixed) << p_dMaxGeschwindigkeit << ' '
 		<< setw(15) << p_dGesamtStrecke << ' '
 		<< setw(10) << p_dTankinhalt;
+}
+
+void Fahrzeug::vEinlesen(istream& i)
+{
+	Simulationsobjekt::vEinlesen(i);
+	i >> p_dMaxGeschwindigkeit;
 }
 
 void Fahrzeug::vSimulieren()

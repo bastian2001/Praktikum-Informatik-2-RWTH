@@ -1,4 +1,5 @@
 #include "Simulationsobjekt.h"
+#include "PKW.h"
 
 
 int Simulationsobjekt::p_iMaxID = 0;
@@ -15,9 +16,16 @@ Simulationsobjekt::~Simulationsobjekt()
 	//cout << "Simulationsobjekt " << p_sName << " mit ID " << p_iID << " gelöscht\n";
 }
 
+void Simulationsobjekt::vEinlesen(istream& i)
+{
+	if (p_sName != "")
+		throw runtime_error("Fahrzeug ist nicht unbenannt");
+	i >> p_sName;
+}
+
 bool Simulationsobjekt::operator==(const Simulationsobjekt& f) const
 {
-	return this->p_iID == f.p_iID;
+	return this != nullptr && &f != nullptr && this->p_iID == f.p_iID;
 }
 
 Simulationsobjekt& Simulationsobjekt::operator=(const Simulationsobjekt &s)

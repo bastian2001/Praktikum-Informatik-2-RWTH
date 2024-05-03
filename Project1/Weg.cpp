@@ -6,20 +6,24 @@
 #include <iostream>
 using namespace std;
 
-Weg::Weg() :
+/*Weg::Weg() :
     Simulationsobjekt::Simulationsobjekt(""),
     p_dLaenge(0),
-    p_eTempolimit(Tempolimit::autobahn)
+    p_eTempolimit(Tempolimit::autobahn),
+    p_bUeberholverbot(true)
 {
     cout << "Weg ohne Namen mit ID " << p_iID << " erstellt." << endl;
-}
+}*/
 
-Weg::Weg(string sName, double dLaenge, Tempolimit eTempolimit):
+Weg::Weg(string sName, double dLaenge, weak_ptr<Kreuzung> pKreuzung, Tempolimit eTempolimit, bool bUeberholverbot):
     Simulationsobjekt::Simulationsobjekt(sName),
     p_dLaenge(dLaenge),
-    p_eTempolimit(eTempolimit)
+    p_eTempolimit(eTempolimit),
+    p_bUeberholverbot(bUeberholverbot),
+    p_dSchranke(dLaenge),
+    p_pZielkreuzung(pKreuzung)
 {
-    cout << "Weg " << sName << " mit Tempolimit " << (int)eTempolimit << " und ID " << p_iID << " erstellt." << endl;
+    cout << "Weg " << sName << " mit Tempolimit " << (int)eTempolimit << " und ID " << p_iID << (bUeberholverbot ? ", mit" : ", ohne") << " Ueberholverbot, erstellt." << endl;
 }
 
 double Weg::getTempolimit() const
@@ -31,6 +35,7 @@ void Weg::vSimulieren()
 {
     //Aktualisiert die Fahrzeugliste
     p_pFahrzeuge.vAktualisieren();
+    setSchranke(p_dLaenge);
     for (auto& pFahrzeug : p_pFahrzeuge)
     {
         //Simuliert jedes enthaltene Fahrzeug
@@ -101,6 +106,34 @@ void Weg::vKopf()
 double Weg::getLaenge() const
 {
     return p_dLaenge;
+}
+
+double Weg::getSchranke() const
+{
+    if (p_bUeberholverbot)
+        return p_dSchranke;
+    return p_dLaenge;
+}
+
+void Weg::setSchranke(double dSchranke)
+{
+    p_dSchranke = dSchranke;
+}
+
+void Weg::setRueckweg(weak_ptr<Weg> pRueckweg)
+{
+    p_pRueckweg = pRueckweg;
+
+}
+
+shared_ptr<Weg> Weg::getRueckweg() const
+{
+    return p_pRueckweg.lock();
+}
+
+shared_ptr<Kreuzung> Weg::getZielkreuzung() const
+{
+    return p_pZielkreuzung.lock();
 }
 
 
